@@ -229,7 +229,7 @@ footer {
   © 2026 teraboxplay.xyz
 </footer>
 
-<script>
+<<script>
 function getParam(name) {
   const url = new URL(window.location.href);
   return url.searchParams.get(name);
@@ -238,13 +238,14 @@ function getParam(name) {
 const teraboxLink = getParam("url");
 const player = document.getElementById("videoPlayer");
 const downloadBtn = document.getElementById("downloadBtn");
-const loader = document.getElementById("loader");
-const title = document.getElementById("videoTitle");
 
 async function loadVideo() {
   if (!teraboxLink) return;
 
   try {
+    // show loading state
+    player.style.display = "none";
+
     const res = await fetch("https://github-backend00.onrender.com/api", {
       method: "POST",
       headers: {
@@ -263,14 +264,17 @@ async function loadVideo() {
       file.fast_stream_url?.["360p"] ||
       file.stream_url;
 
-    player.src = stream;
-    downloadBtn.onclick = () => window.open(file.download_link, "_blank");
-
-    if (title) {
-      title.textContent = file.name || "TeraBox Video";
+    if (!stream) {
+      alert("Stream not available");
+      return;
     }
 
-    if (loader) loader.style.display = "none";
+    // only now set player source
+    player.src = stream;
+    player.style.display = "block";
+
+    downloadBtn.onclick = () =>
+      window.open(file.download_link, "_blank");
 
   } catch (err) {
     alert("Failed to load video");
