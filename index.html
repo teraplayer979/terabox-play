@@ -50,9 +50,31 @@ body {
   margin-left: 20px;
   text-decoration: none;
   font-size: 14px;
+  transition: 0.3s;
 }
 
-/* Container */
+.nav a:hover {
+  color: white;
+}
+
+/* Background glow */
+body::before {
+  content: "";
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(100,120,255,0.2), transparent);
+  top: -200px;
+  left: -200px;
+  animation: float 12s infinite alternate ease-in-out;
+  z-index: -1;
+}
+
+@keyframes float {
+  from { transform: translate(0,0); }
+  to { transform: translate(200px,200px); }
+}
+
 .container {
   max-width: 900px;
   margin: auto;
@@ -88,16 +110,8 @@ input {
   border-radius: 12px;
   border: none;
   font-size: 16px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   outline: none;
-}
-
-/* Thumbnail preview */
-.thumbnail {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  display: none;
 }
 
 .buttons {
@@ -124,7 +138,97 @@ button {
   color: white;
 }
 
-/* Telegram button */
+/* Telegram bot section */
+.bot-section {
+  margin-top: 60px;
+}
+
+.bot-card {
+  background: linear-gradient(135deg, rgba(0,136,204,0.2), rgba(0,100,180,0.15));
+  border: 1px solid rgba(0,136,204,0.4);
+  padding: 30px;
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 30px rgba(0,136,204,0.3);
+  transition: 0.3s;
+}
+
+.bot-card:hover {
+  transform: translateY(-5px);
+}
+
+.bot-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.bot-desc {
+  color: #cbd5ff;
+  margin-bottom: 20px;
+}
+
+.bot-btn {
+  display: inline-block;
+  padding: 14px 30px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0088cc, #00aaff);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Popular pages */
+.popular {
+  margin-top: 70px;
+}
+
+.popular h2 {
+  margin-bottom: 25px;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 20px;
+}
+
+.popular-card {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.popular-card:hover {
+  transform: translateY(-5px);
+}
+
+footer {
+  margin-top: 70px;
+  padding: 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+footer a {
+  color: #a78bfa;
+  text-decoration: none;
+  margin: 0 6px;
+}
+
+/* === ADDED FEATURES (NO REMOVAL) === */
+
+/* Thumbnail preview */
+.thumbnail {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  display: none;
+}
+
+/* Telegram share button */
 .telegram-btn {
   background: linear-gradient(90deg, #0088cc, #00aaff);
   color: white;
@@ -140,13 +244,6 @@ button {
   font-size: 14px;
   color: #aaa;
 }
-
-footer {
-  margin-top: 70px;
-  padding: 20px;
-  color: #aaa;
-  font-size: 14px;
-}
 </style>
 </head>
 
@@ -156,6 +253,8 @@ footer {
   <div class="logo">TeraBoxPlay</div>
   <nav class="nav">
     <a href="/">Home</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
     <a href="/faq.html">FAQ</a>
     <a href="/privacy.html">Privacy</a>
     <a href="/terms.html">Terms</a>
@@ -169,65 +268,86 @@ footer {
     Watch and download TeraBox videos instantly without installing any app.
   </p>
 
-  <!-- Top Ad -->
-  <div class="ad-box">
-    Ad space (728x90 banner)
-  </div>
+  <!-- Added ad block -->
+  <div class="ad-box">Ad space</div>
 
   <div class="card">
     <input id="url" placeholder="Paste your TeraBox link here..." />
 
-    <!-- Thumbnail -->
+    <!-- Added thumbnail -->
     <img id="thumb" class="thumbnail" />
 
     <div class="buttons">
       <button class="play" onclick="play()">▶ Play</button>
       <button class="download" onclick="download()">⬇ Download</button>
+      <!-- Added Telegram share -->
       <button class="telegram-btn" onclick="shareTG()">📤 Telegram</button>
     </div>
   </div>
 
-  <!-- Bottom Ad -->
-  <div class="ad-box">
-    Ad space (native or rectangle)
+  <!-- Telegram Bot Section -->
+  <div class="bot-section">
+    <div class="bot-card">
+      <div class="bot-title">🚀 Use Our Telegram Bot</div>
+      <div class="bot-desc">
+        Watch and download TeraBox videos directly inside Telegram.
+      </div>
+      <a class="bot-btn" href="https://t.me/free_terabox_video_bot" target="_blank">
+        Open Telegram Bot
+      </a>
+    </div>
+  </div>
+
+  <!-- Popular pages -->
+  <div class="popular">
+    <h2>Popular Pages</h2>
+    <div class="popular-grid">
+      <a class="popular-card" href="/terabox-video-player.html">▶ TeraBox Video Player</a>
+      <a class="popular-card" href="/terabox-downloader.html">⬇ TeraBox Downloader</a>
+      <a class="popular-card" href="/watch-terabox-online.html">🎬 Watch Online</a>
+    </div>
   </div>
 
   <footer>
-    © 2026 teraboxplay.xyz
+    © 2026 teraboxplay.xyz – All rights reserved<br><br>
+    <a href="/privacy.html">Privacy Policy</a> |
+    <a href="/terms.html">Terms</a> |
+    <a href="/faq.html">FAQ</a>
   </footer>
 
 </div>
 
 <script>
-const input = document.getElementById("url");
-const thumb = document.getElementById("thumb");
-
-/* Thumbnail preview */
-input.addEventListener("input", () => {
-  const url = input.value.trim();
-  if (url.includes("http")) {
-    thumb.src = "https://via.placeholder.com/800x450?text=Video+Preview";
-    thumb.style.display = "block";
-  } else {
-    thumb.style.display = "none";
-  }
-});
-
 function play() {
-  let url = input.value;
+  let url = document.getElementById("url").value;
   if(!url) return alert("Paste link first");
   window.location.href = "/player.html?url=" + encodeURIComponent(url);
 }
 
 function download() {
-  let url = input.value;
+  let url = document.getElementById("url").value;
   if(!url) return alert("Paste link first");
   window.location.href = "/player.html?download=1&url=" + encodeURIComponent(url);
 }
 
-/* Telegram share */
+/* === Added script only === */
+const input = document.getElementById("url");
+const thumb = document.getElementById("thumb");
+
+if(input){
+  input.addEventListener("input", () => {
+    const url = input.value.trim();
+    if (url.includes("http")) {
+      thumb.src = "https://via.placeholder.com/800x450?text=Video+Preview";
+      thumb.style.display = "block";
+    } else {
+      thumb.style.display = "none";
+    }
+  });
+}
+
 function shareTG() {
-  let url = input.value;
+  let url = document.getElementById("url").value;
   if(!url) return alert("Paste link first");
   const share = "https://t.me/share/url?url=" + encodeURIComponent(url);
   window.open(share, "_blank");
