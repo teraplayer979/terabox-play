@@ -218,9 +218,7 @@ footer a {
   margin: 0 6px;
 }
 
-/* === ADDED FEATURES (NO REMOVAL) === */
-
-/* Thumbnail preview */
+/* === ADDED FEATURES === */
 .thumbnail {
   width: 100%;
   border-radius: 12px;
@@ -228,13 +226,11 @@ footer a {
   display: none;
 }
 
-/* Telegram share button */
 .telegram-btn {
   background: linear-gradient(90deg, #0088cc, #00aaff);
   color: white;
 }
 
-/* Ad blocks */
 .ad-box {
   margin: 25px 0;
   padding: 20px;
@@ -268,19 +264,16 @@ footer a {
     Watch and download TeraBox videos instantly without installing any app.
   </p>
 
-  <!-- Added ad block -->
   <div class="ad-box">Ad space</div>
 
   <div class="card">
     <input id="url" placeholder="Paste your TeraBox link here..." />
 
-    <!-- Added thumbnail -->
     <img id="thumb" class="thumbnail" />
 
     <div class="buttons">
       <button class="play" onclick="play()">▶ Play</button>
       <button class="download" onclick="download()">⬇ Download</button>
-      <!-- Added Telegram share -->
       <button class="telegram-btn" onclick="shareTG()">📤 Telegram</button>
     </div>
   </div>
@@ -330,22 +323,21 @@ function download() {
   window.location.href = "/player.html?download=1&url=" + encodeURIComponent(url);
 }
 
-/* === Added script only === */
+/* Thumbnail preview */
 const input = document.getElementById("url");
 const thumb = document.getElementById("thumb");
 
-if(input){
-  input.addEventListener("input", () => {
-    const url = input.value.trim();
-    if (url.includes("http")) {
-      thumb.src = "https://via.placeholder.com/800x450?text=Video+Preview";
-      thumb.style.display = "block";
-    } else {
-      thumb.style.display = "none";
-    }
-  });
-}
+input.addEventListener("input", () => {
+  const url = input.value.trim();
+  if (url.includes("http")) {
+    thumb.src = "https://via.placeholder.com/800x450?text=Video+Preview";
+    thumb.style.display = "block";
+  } else {
+    thumb.style.display = "none";
+  }
+});
 
+/* Telegram share */
 function shareTG() {
   let url = document.getElementById("url").value;
   if(!url) return alert("Paste link first");
