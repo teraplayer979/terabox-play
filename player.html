@@ -2,102 +2,168 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>TeraBox Video Player</title>
+<title>TeraBox Player – Watch Online</title>
+<meta name="description" content="Watch TeraBox videos online in a premium secure player.">
 
 <style>
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #070b1a, #0f1b3d);
+}
+
+body {
+  background: radial-gradient(circle at top, #0f1b3d, #050814);
   color: white;
-  text-align: center;
 }
 
+/* Header */
+.header {
+  width: 100%;
+  padding: 18px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10,15,35,0.6);
+  backdrop-filter: blur(12px);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #4da3ff, #9b5cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav a {
+  color: #cbd5ff;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+/* Container */
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: auto;
-  padding: 30px 15px;
+  padding: 40px 20px;
 }
 
-h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
-}
-
-.player-box {
+/* Player card */
+.player-card {
   background: rgba(255,255,255,0.05);
-  border-radius: 16px;
-  padding: 15px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  border-radius: 18px;
+  padding: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
 }
 
 video {
   width: 100%;
+  border-radius: 12px;
+  background: black;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  padding: 14px 28px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
   border-radius: 10px;
+  cursor: pointer;
+}
+
+.home-btn {
+  background: linear-gradient(90deg, #3a7cff, #6b4dff);
+  color: white;
 }
 
 .download-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 25px;
   background: linear-gradient(90deg, #ff7a18, #ff3d3d);
   color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
 }
 
-.ad-box {
-  margin: 30px 0;
-  padding: 20px;
-  background: rgba(255,255,255,0.04);
-  border-radius: 12px;
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #aaa;
+  margin-top: 60px;
+}
+
+footer a {
+  color: #a78bfa;
+  text-decoration: none;
+  margin: 0 6px;
 }
 </style>
 </head>
 
 <body>
 
+<header class="header">
+  <div class="logo">TeraBoxPlay</div>
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </nav>
+</header>
+
 <div class="container">
 
-  <h1>Streaming Video</h1>
-
-  <div class="player-box">
-    <video id="video" controls autoplay></video>
+  <div class="player-card">
+    <video id="videoPlayer" controls></video>
   </div>
 
-  <div id="downloadSection"></div>
-
-  <div class="ad-box">
-    <!-- AdSense ad will go here later -->
-    Advertisement space
+  <div class="buttons">
+    <button class="home-btn" onclick="goHome()">⬅ Back to Home</button>
+    <button class="download-btn" id="downloadBtn">⬇ Download</button>
   </div>
 
 </div>
 
+<footer>
+  © 2026 teraboxplay.xyz – All rights reserved<br><br>
+  <a href="/privacy.html">Privacy Policy</a> |
+  <a href="/terms.html">Terms of Service</a>
+</footer>
+
 <script>
 function getParam(name) {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(name);
+  const url = new URL(window.location.href);
+  return url.searchParams.get(name);
 }
 
 const videoUrl = getParam("url");
-const download = getParam("download");
+const downloadMode = getParam("download");
+
+const player = document.getElementById("videoPlayer");
+const downloadBtn = document.getElementById("downloadBtn");
 
 if (videoUrl) {
-  const video = document.getElementById("video");
-  video.src = videoUrl;
+  player.src = videoUrl;
+  downloadBtn.onclick = () => {
+    window.open(videoUrl, "_blank");
+  };
 
-  if (download) {
-    document.getElementById("downloadSection").innerHTML =
-      `<a class="download-btn" href="${videoUrl}" download>
-        ⬇ Download Video
-      </a>`;
+  if (downloadMode === "1") {
+    window.open(videoUrl, "_blank");
   }
-} else {
-  document.body.innerHTML = "<h2>No video link provided.</h2>";
+}
+
+function goHome() {
+  window.location.href = "/";
 }
 </script>
 
