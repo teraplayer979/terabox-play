@@ -235,121 +235,65 @@ function getParam(name) {
   return url.searchParams.get(name);
 }
 
-const videoUrl = getParam("url");
+const teraboxLink = getParam("url");
 const player = document.getElementById("videoPlayer");
-const skeleton = document.getElementById("skeleton");
-const thumbnail = document.getElementById("thumbnail");
+const downloadBtn = document.getElementById("downloadBtn");
+const loader = document.getElementById("loader");
 const title = document.getElementById("videoTitle");
 
-/* Load video */
-if (videoUrl) {
-  player.src = videoUrl;
+async function loadVideo() {
+  if (!teraboxLink) return;
 
-  // Thumbnail
-  thumbnail.src = videoUrl;
-  thumbnail.style.display = "block";
+  try {
+    const res = await fetch("https://github-backend00.onrender.com/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ url: teraboxLink })
+    });
 
-  // Title
-  const fileName = decodeURIComponent(videoUrl.split("/").pop());
-  title.innerText = fileName;
+    const data = await res.json();
+
+    const file = data.list[0];
+
+    const stream =
+      file.fast_stream_url?.["720p"] ||
+      file.fast_stream_url?.["480p"] ||
+      file.fast_stream_url?.["360p"] ||
+      file.stream_url;
+
+    player.src = stream;
+    downloadBtn.onclick = () => window.open(file.download_link, "_blank");
+
+    if (title) {
+      title.textContent = file.name || "TeraBox Video";
+    }
+
+    if (loader) loader.style.display = "none";
+
+  } catch (err) {
+    alert("Failed to load video");
+  }
 }
 
-player.addEventListener("loadeddata", () => {
-  skeleton.style.display = "none";
-});
-
-/* Copy share link */
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href);
-  alert("Link copied!");
-}
-
-/* Focus mode */
-function toggleFocus() {
-  document.body.classList.toggle("focus-mode");
-}
-
-/* Telegram share */
-function shareTelegram() {
-  const shareUrl = encodeURIComponent(window.location.href);
-  window.open(`https://t.me/share/url?url=${shareUrl}`, "_blank");
-}
+loadVideo();
 
 /* Resume playback */
-const videoKey = "video_" + videoUrl;
-
 player.addEventListener("loadedmetadata", () => {
-  const savedTime = localStorage.getItem(videoKey);
-  if (savedTime) {
-    player.currentTime = savedTime;
-  }
+  const key = "time_" + player.src;
+  const saved = localStorage.getItem(key);
+  if (saved) player.currentTime = saved;
 });
 
 player.addEventListener("timeupdate", () => {
-  localStorage.setItem(videoKey, player.currentTime);
+  const key = "time_" + player.src;
+  localStorage.setItem(key, player.currentTime);
 });
 
-/* History */
-if (videoUrl) {
-  let history = JSON.parse(localStorage.getItem("history") || "[]");
-  history = history.filter(item => item !== videoUrl);
-  history.unshift(videoUrl);
-  if (history.length > 5) history.pop();
-  localStorage.setItem("history", JSON.stringify(history));
+function goHome() {
+  window.location.href = "/";
 }
-
-const historyBox = document.getElementById("historyBox");
-let history = JSON.parse(localStorage.getItem("history") || "[]");
-
-if (history.length > 0) {
-  historyBox.innerHTML = "<h3>Recently Viewed</h3>";
-  history.forEach(link => {
-    historyBox.innerHTML +=
-      `<a href="/player.html?url=${encodeURIComponent(link)}">${link}</a>`;
-  });
-}
-
-/* Comments */
-function addComment() {
-  const input = document.getElementById("commentInput");
-  const text = input.value;
-  if (!text) return;
-
-  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
-  comments.push(text);
-  localStorage.setItem("comments", JSON.stringify(comments));
-
-  input.value = "";
-  renderComments();
-}
-
-function renderComments() {
-  const list = document.getElementById("commentList");
-  list.innerHTML = "";
-  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
-
-  comments.forEach(c => {
-    list.innerHTML += `<div class="comment">${c}</div>`;
-  });
-}
-
-renderComments();
-
-/* Install as app */
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById("installBtn").style.display = "inline-block";
-});
-
-document.getElementById("installBtn").addEventListener("click", async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt = null;
-  }
-});
 </script>
-
 </body>
 </html>
