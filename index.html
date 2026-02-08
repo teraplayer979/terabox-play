@@ -151,7 +151,35 @@ button {
   padding: 25px;
   border-radius: 14px;
 }
+.popular {
+  margin-top: 60px;
+  text-align: center;
+}
 
+.popular h2 {
+  margin-bottom: 25px;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 20px;
+}
+
+.popular-card {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+  backdrop-filter: blur(10px);
+}
+
+.popular-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(100,120,255,0.4);
+}
 /* SEO content */
 .content {
   margin-top: 70px;
