@@ -1,66 +1,184 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Terabox Downloader</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Fast Terabox downloader. Watch and download instantly.">
-  <style>
-    body {
-      background: #0f0f0f;
-      color: white;
-      font-family: Arial;
-      text-align: center;
-      padding: 40px;
-    }
-    input {
-      width: 80%;
-      padding: 12px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
-    }
-    button {
-      padding: 12px 20px;
-      background: #00aaff;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-    }
-    video {
-      width: 90%;
-      margin-top: 20px;
-      border-radius: 10px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>TeraBox Video Player & Downloader – Watch TeraBox Links Online</title>
+<meta name="description" content="Play and download TeraBox videos online instantly. No app required. Fast, free, and unlimited TeraBox video player and downloader." />
+<link rel="canonical" href="https://teraboxplay.xyz/" />
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #070b1a, #0f1b3d);
+  color: white;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #4da3ff, #9b5cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtext {
+  color: #cbd5ff;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+input {
+  width: 80%;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+button {
+  padding: 14px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.play {
+  background: linear-gradient(90deg, #3a7cff, #6b4dff);
+  color: white;
+}
+
+.download {
+  background: linear-gradient(90deg, #ff7a18, #ff3d3d);
+  color: white;
+}
+
+.features {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 20px;
+}
+
+.feature {
+  background: rgba(255,255,255,0.04);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.content {
+  margin-top: 60px;
+  text-align: left;
+  line-height: 1.7;
+}
+
+footer {
+  margin-top: 60px;
+  padding: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+</style>
 </head>
+
 <body>
 
-<h1>Terabox Downloader</h1>
-<p>Watch and download Terabox videos instantly</p>
+<div class="container">
 
-<input id="link" placeholder="Paste Terabox link here">
-<br>
-<button onclick="play()">Play Video</button>
+  <h1>TeraBox Video Player & Downloader</h1>
+  <p class="subtext">
+    Watch and download TeraBox videos instantly without installing any app.
+  </p>
 
-<div id="result"></div>
+  <div class="card">
+    <input id="url" placeholder="Paste your TeraBox link here..." />
+    <div class="buttons">
+      <button class="play" onclick="play()">▶ Play</button>
+      <button class="download" onclick="download()">⬇ Download</button>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature">⚡ Instant Streaming</div>
+    <div class="feature">🔒 Secure Playback</div>
+    <div class="feature">📱 Mobile Friendly</div>
+    <div class="feature">♾ Unlimited Use</div>
+  </div>
+
+  <div class="content">
+    <h2>How to Play TeraBox Videos Online</h2>
+    <p>
+      TeraBoxPlay allows you to watch and download TeraBox videos directly in your browser. 
+      You don’t need to install any app or create an account. Simply paste your TeraBox link 
+      and start streaming instantly.
+    </p>
+    <p>
+      This online TeraBox player works on all devices including mobile phones, tablets, 
+      and desktops. It provides fast loading speeds and secure video playback.
+    </p>
+    <p>
+      Follow these steps:
+    </p>
+    <ul>
+      <li>Copy your TeraBox video link</li>
+      <li>Paste it into the input box above</li>
+      <li>Click Play or Download</li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h2>Frequently Asked Questions</h2>
+    <p><strong>Is this TeraBox player free?</strong><br>
+    Yes, it is completely free to use.</p>
+
+    <p><strong>Do I need to install anything?</strong><br>
+    No, everything works directly in your browser.</p>
+
+    <p><strong>Does it work on mobile?</strong><br>
+    Yes, it works on Android, iPhone, and tablets.</p>
+  </div>
+
+  <footer>
+    © 2026 teraboxplay.xyz – All rights reserved
+  </footer>
+
+</div>
 
 <script>
-async function play() {
-  const link = document.getElementById("link").value;
+function play() {
+  let url = document.getElementById("url").value;
+  if(!url) return alert("Paste link first");
+  window.location.href = "/player.html?url=" + encodeURIComponent(url);
+}
 
-  const res = await fetch("https://terabox-bot-production.up.railway.app/api/terabox",  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ url: link })
-  });
-
-  const data = await res.json();
-
-  document.getElementById("result").innerHTML =
-    `<video controls src="${data.video}"></video>`;
+function download() {
+  let url = document.getElementById("url").value;
+  if(!url) return alert("Paste link first");
+  window.location.href = "/player.html?download=1&url=" + encodeURIComponent(url);
 }
 </script>
 
