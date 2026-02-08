@@ -227,7 +227,7 @@ footer a:hover {
   "url": "https://teraboxplay.xyz",
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Web",
-  "description": "Free online TeraBox video player and downloader. Watch and download TeraBox videos instantly without installing any app.",
+  "description": "Free online TeraBox video player and downloader.",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -239,4 +239,77 @@ footer a:hover {
 </head>
 
 <body>
-<!-- rest of your code remains exactly the same -->
+
+<header class="header">
+  <div class="logo">TeraBoxPlay</div>
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <h1>TeraBox Video Player & Downloader</h1>
+  <p class="subtext">
+    Watch and download TeraBox videos instantly without installing any app.
+  </p>
+
+  <div class="card">
+    <input id="url" placeholder="Paste your TeraBox link here..." />
+    <div class="buttons">
+      <button class="play" onclick="play()">▶ Play</button>
+      <button class="download" onclick="download()">⬇ Download</button>
+    </div>
+  </div>
+
+  <!-- Popular pages -->
+  <div class="popular">
+    <h2>Popular Pages</h2>
+    <div class="popular-grid">
+      <a class="popular-card" href="/terabox-video-player.html">▶ TeraBox Video Player</a>
+      <a class="popular-card" href="/terabox-downloader.html">⬇ TeraBox Downloader</a>
+      <a class="popular-card" href="/watch-terabox-online.html">🎬 Watch TeraBox Videos Online</a>
+    </div>
+  </div>
+
+  <!-- Guides Section -->
+  <div class="popular">
+    <h2>Helpful Guides</h2>
+    <div class="popular-grid">
+      <a class="popular-card" href="/fix-terabox-slow-speed.html">🐢 Fix TeraBox Slow Speed</a>
+      <a class="popular-card" href="/terabox-download-failed-fix.html">⚠️ Download Failed Fix</a>
+      <a class="popular-card" href="/is-terabox-safe.html">🔐 Is TeraBox Safe?</a>
+      <a class="popular-card" href="/watch-terabox-without-app.html">▶ Watch Without App</a>
+      <a class="popular-card" href="/terabox-link-not-working.html">🔗 Link Not Working</a>
+      <a class="popular-card" href="/terabox-vs-google-drive.html">☁️ TeraBox vs Google Drive</a>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 teraboxplay.xyz – All rights reserved<br><br>
+    <a href="/privacy.html">Privacy Policy</a> |
+    <a href="/terms.html">Terms of Service</a>
+  </footer>
+
+</div>
+
+<script>
+function play() {
+  let url = document.getElementById("url").value;
+  if(!url) return alert("Paste link first");
+  window.location.href = "/player.html?url=" + encodeURIComponent(url);
+}
+
+function download() {
+  let url = document.getElementById("url").value;
+  if(!url) return alert("Paste link first");
+  window.location.href = "/player.html?download=1&url=" + encodeURIComponent(url);
+}
+</script>
+
+</body>
+</html>>
