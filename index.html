@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Terabox Downloader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fast Terabox downloader. Watch and download instantly.">
+  <style>
+    body {
+      background: #0f0f0f;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+      padding: 40px;
+    }
+    input {
+      width: 80%;
+      padding: 12px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      padding: 12px 20px;
+      background: #00aaff;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+    }
+    video {
+      width: 90%;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Terabox Downloader</h1>
+<p>Watch and download Terabox videos instantly</p>
+
+<input id="link" placeholder="Paste Terabox link here">
+<br>
+<button onclick="play()">Play Video</button>
+
+<div id="result"></div>
+
+<script>
+async function play() {
+  const link = document.getElementById("link").value;
+
+  const res = await fetch("YOUR_API_URL", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ url: link })
+  });
+
+  const data = await res.json();
+
+  document.getElementById("result").innerHTML =
+    `<video controls src="${data.video}"></video>`;
+}
+</script>
+
+</body>
+</html>
