@@ -268,7 +268,6 @@ footer a {
 
   <div class="card">
     <input id="url" placeholder="Paste your TeraBox link here..." />
-
     <img id="thumb" class="thumbnail" />
 
     <div class="buttons">
@@ -327,15 +326,23 @@ function download() {
 const input = document.getElementById("url");
 const thumb = document.getElementById("thumb");
 
-input.addEventListener("input", () => {
-  const url = input.value.trim();
-  if (url.includes("http")) {
-    thumb.src = "https://via.placeholder.com/800x450?text=Video+Preview";
-    thumb.style.display = "block";
-  } else {
-    thumb.style.display = "none";
-  }
-});
+if(input && thumb){
+  input.addEventListener("input", () => {
+    const url = input.value.trim();
+    if (url.startsWith("http")) {
+      thumb.src = "https://via.placeholder.com/800x450?text=Video+Preview";
+      thumb.style.display = "block";
+    } else {
+      thumb.style.display = "none";
+    }
+  });
+
+  input.addEventListener("keypress", function(e){
+    if(e.key === "Enter"){
+      play();
+    }
+  });
+}
 
 /* Telegram share */
 function shareTG() {
