@@ -323,27 +323,46 @@ function download() {
 }
 
 /* Thumbnail preview */
+/* Real thumbnail preview from API */
 const input = document.getElementById("url");
 const thumb = document.getElementById("thumb");
 
-if(input && thumb){
-  input.addEventListener("input", () => {
-    const url = input.value.trim();
-    if (url.startsWith("http")) {
-      thumb.src = "https://via.placeholder.com/800x450?text=Video+Preview";
-      thumb.style.display = "block";
-    } else {
+let thumbTimeout;
+
+input.addEventListener("input", () => {
+  clearTimeout(thumbTimeout);
+
+  const url = input.value.trim();
+  if (!url.includes("http")) {
+    thumb.style.display = "none";
+    return;
+  }
+
+  /* delay to avoid too many API calls while typing */
+  thumbTimeout = setTimeout(async () => {
+    try {
+      const res = await fetch("https://github-backend00.onrender.com/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url })
+      });
+
+      const data = await res.json();
+
+      if (data && data.list && data.list[0] && data.list[0].thumb) {
+        thumb.src = data.list[0].thumb;
+        thumb.style.display = "block";
+      } else {
+        thumb.style.display = "none";
+      }
+
+    } catch (e) {
       thumb.style.display = "none";
     }
-  });
-
-  input.addEventListener("keypress", function(e){
-    if(e.key === "Enter"){
-      play();
-    }
-  });
-}
-
+  }, 800);
+});
 /* Telegram share */
 function shareTG() {
   let url = document.getElementById("url").value;
