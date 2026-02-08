@@ -23,7 +23,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Premium header */
+/* Header */
 .header {
   width: 100%;
   padding: 18px 30px;
@@ -57,7 +57,7 @@ body {
   color: white;
 }
 
-/* Animated background glow */
+/* Background glow */
 body::before {
   content: "";
   position: fixed;
@@ -151,6 +151,8 @@ button {
   padding: 25px;
   border-radius: 14px;
 }
+
+/* Popular pages */
 .popular {
   margin-top: 60px;
   text-align: center;
@@ -181,25 +183,21 @@ button {
   box-shadow: 0 0 20px rgba(100,120,255,0.4);
 }
 
-<div class="features">
-  <div class="feature">⚡ Instant Streaming</div>
-  <div class="feature">🔒 Secure Playback</div>
-  <div class="feature">📱 Mobile Friendly</div>
-  <div class="feature">♾ Unlimited Use</div>
-</div>
-
-<div class="features">
-  <div class="feature">🌍 Works Worldwide</div>
-  <div class="feature">🚫 No Login Required</div>
-  <div class="feature">🛡 Privacy Focused</div>
-  <div class="feature">⚙ Fast Processing</div>
-</div>
-  
 /* SEO content */
 .content {
   margin-top: 70px;
   text-align: left;
   line-height: 1.8;
+}
+
+.content h2 {
+  margin-top: 60px;
+}
+
+.why-heading {
+  background: linear-gradient(90deg, #ff9a3d, #ff4d6d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 footer {
@@ -218,17 +216,6 @@ footer a {
 footer a:hover {
   color: white;
 }
-  /* Section spacing */
-.content h2 {
-  margin-top: 60px;
-}
-
-/* Special highlight for Why section */
-.why-heading {
-  background: linear-gradient(90deg, #ff9a3d, #ff4d6d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 </style>
 </head>
 
@@ -237,12 +224,12 @@ footer a:hover {
 <header class="header">
   <div class="logo">TeraBoxPlay</div>
   <nav class="nav">
-  <a href="/">Home</a>
-  <a href="/about.html">About</a>
-  <a href="/contact.html">Contact</a>
-  <a href="/privacy.html">Privacy</a>
-  <a href="/terms.html">Terms</a>
-</nav>
+    <a href="/">Home</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </nav>
 </header>
 
 <div class="container">
@@ -260,84 +247,77 @@ footer a:hover {
     </div>
   </div>
 
+  <!-- Main features -->
   <div class="features">
     <div class="feature">⚡ Instant Streaming</div>
     <div class="feature">🔒 Secure Playback</div>
     <div class="feature">📱 Mobile Friendly</div>
     <div class="feature">♾ Unlimited Use</div>
   </div>
-  <div class="content" style="text-align:center;">
-  <h2>How It Works</h2>
 
+  <!-- Trust features -->
   <div class="features">
-    <div class="feature">
-      <h3>1. Paste Link</h3>
-      <p>Copy your TeraBox share link and paste it into the input box.</p>
-    </div>
+    <div class="feature">🌍 Works Worldwide</div>
+    <div class="feature">🚫 No Login Required</div>
+    <div class="feature">🛡 Privacy Focused</div>
+    <div class="feature">⚙ Fast Processing</div>
+  </div>
 
-    <div class="feature">
-      <h3>2. Click Play or Download</h3>
-      <p>Choose to stream the video online or download it to your device.</p>
-    </div>
-
-    <div class="feature">
-      <h3>3. Enjoy Instantly</h3>
-      <p>Your video will start playing or downloading within seconds.</p>
+  <!-- How it works -->
+  <div class="content" style="text-align:center;">
+    <h2>How It Works</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>1. Paste Link</h3>
+        <p>Copy your TeraBox share link and paste it into the input box.</p>
+      </div>
+      <div class="feature">
+        <h3>2. Click Play or Download</h3>
+        <p>Choose to stream or download the video.</p>
+      </div>
+      <div class="feature">
+        <h3>3. Enjoy Instantly</h3>
+        <p>Your video starts within seconds.</p>
+      </div>
     </div>
   </div>
-</div>
 
-  <!-- FULL SEO CONTENT BLOCK -->
+  <!-- SEO content -->
   <div class="content">
 
     <h2>What is TeraBox Video Player?</h2>
     <p>
-      TeraBox Video Player is an online tool that allows users to stream and download
-      TeraBox videos directly in their browser. You don’t need to install any app or
-      create an account. Simply paste your TeraBox link and start watching instantly.
+      TeraBox Video Player lets you stream and download TeraBox videos directly
+      in your browser without installing any app.
     </p>
 
     <h2 class="why-heading">Why Use TeraBoxPlay?</h2>
     <p>
-      TeraBoxPlay is designed for speed, simplicity, and security. Our platform
-      provides smooth playback, fast download options, and a clean user interface
-      that works perfectly on mobile, tablet, and desktop devices.
+      TeraBoxPlay is designed for speed, simplicity, and security with smooth
+      playback and fast downloads.
     </p>
-
-    
 
     <h2>How to Download TeraBox Videos</h2>
     <p>
-      To download a TeraBox video, copy the public share link from TeraBox,
-      paste it into the input box above, and click the download button.
-      The system will process your link and provide a direct download option.
+      Paste your TeraBox link and click download to get the file instantly.
     </p>
 
     <h2>Supported Devices</h2>
     <p>
-      Our online video player works on all modern browsers including
-      Chrome, Safari, Edge, and Firefox. It supports Android phones,
-      iPhones, iPads, Windows PCs, and Mac devices.
+      Works on Android, iPhone, Windows, Mac, and all modern browsers.
     </p>
 
   </div>
+
+  <!-- Popular pages -->
   <div class="popular">
-  <h2>Popular Pages</h2>
-
-  <div class="popular-grid">
-    <a class="popular-card" href="/terabox-video-player.html">
-      ▶ TeraBox Video Player
-    </a>
-
-    <a class="popular-card" href="/terabox-downloader.html">
-      ⬇ TeraBox Downloader
-    </a>
-
-    <a class="popular-card" href="/watch-terabox-online.html">
-      🎬 Watch TeraBox Videos Online
-    </a>
+    <h2>Popular Pages</h2>
+    <div class="popular-grid">
+      <a class="popular-card" href="/terabox-video-player.html">▶ TeraBox Video Player</a>
+      <a class="popular-card" href="/terabox-downloader.html">⬇ TeraBox Downloader</a>
+      <a class="popular-card" href="/watch-terabox-online.html">🎬 Watch TeraBox Videos Online</a>
+    </div>
   </div>
-</div>
 
   <footer>
     © 2026 teraboxplay.xyz – All rights reserved<br><br>
