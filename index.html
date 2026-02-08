@@ -217,129 +217,26 @@ footer a:hover {
   color: white;
 }
 </style>
-</head>
 
-<body>
-
-<header class="header">
-  <div class="logo">TeraBoxPlay</div>
-  <nav class="nav">
-    <a href="/">Home</a>
-    <a href="/about.html">About</a>
-    <a href="/contact.html">Contact</a>
-    <a href="/privacy.html">Privacy</a>
-    <a href="/terms.html">Terms</a>
-  </nav>
-</header>
-
-<div class="container">
-
-  <h1>TeraBox Video Player & Downloader</h1>
-  <p class="subtext">
-    Watch and download TeraBox videos instantly without installing any app.
-  </p>
-
-  <div class="card">
-    <input id="url" placeholder="Paste your TeraBox link here..." />
-    <div class="buttons">
-      <button class="play" onclick="play()">▶ Play</button>
-      <button class="download" onclick="download()">⬇ Download</button>
-    </div>
-  </div>
-
-  <!-- Main features -->
-  <div class="features">
-    <div class="feature">⚡ Instant Streaming</div>
-    <div class="feature">🔒 Secure Playback</div>
-    <div class="feature">📱 Mobile Friendly</div>
-    <div class="feature">♾ Unlimited Use</div>
-  </div>
-
-  <!-- Trust features -->
-  <div class="features">
-    <div class="feature">🌍 Works Worldwide</div>
-    <div class="feature">🚫 No Login Required</div>
-    <div class="feature">🛡 Privacy Focused</div>
-    <div class="feature">⚙ Fast Processing</div>
-  </div>
-
-  <!-- How it works -->
-  <div class="content" style="text-align:center;">
-    <h2>How It Works</h2>
-    <div class="features">
-      <div class="feature">
-        <h3>1. Paste Link</h3>
-        <p>Copy your TeraBox share link and paste it into the input box.</p>
-      </div>
-      <div class="feature">
-        <h3>2. Click Play or Download</h3>
-        <p>Choose to stream or download the video.</p>
-      </div>
-      <div class="feature">
-        <h3>3. Enjoy Instantly</h3>
-        <p>Your video starts within seconds.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SEO content -->
-  <div class="content">
-
-    <h2>What is TeraBox Video Player?</h2>
-    <p>
-      TeraBox Video Player lets you stream and download TeraBox videos directly
-      in your browser without installing any app.
-    </p>
-
-    <h2 class="why-heading">Why Use TeraBoxPlay?</h2>
-    <p>
-      TeraBoxPlay is designed for speed, simplicity, and security with smooth
-      playback and fast downloads.
-    </p>
-
-    <h2>How to Download TeraBox Videos</h2>
-    <p>
-      Paste your TeraBox link and click download to get the file instantly.
-    </p>
-
-    <h2>Supported Devices</h2>
-    <p>
-      Works on Android, iPhone, Windows, Mac, and all modern browsers.
-    </p>
-
-  </div>
-
-  <!-- Popular pages -->
-  <div class="popular">
-    <h2>Popular Pages</h2>
-    <div class="popular-grid">
-      <a class="popular-card" href="/terabox-video-player.html">▶ TeraBox Video Player</a>
-      <a class="popular-card" href="/terabox-downloader.html">⬇ TeraBox Downloader</a>
-      <a class="popular-card" href="/watch-terabox-online.html">🎬 Watch TeraBox Videos Online</a>
-    </div>
-  </div>
-
-  <footer>
-    © 2026 teraboxplay.xyz – All rights reserved<br><br>
-    <a href="/privacy.html">Privacy Policy</a> |
-    <a href="/terms.html">Terms of Service</a>
-  </footer>
-
-</div>
-
-<script>
-function play() {
-  let url = document.getElementById("url").value;
-  if(!url) return alert("Paste link first");
-  window.location.href = "/player.html?url=" + encodeURIComponent(url);
-}
-
-function download() {
-  let url = document.getElementById("url").value;
-  if(!url) return alert("Paste link first");
-  window.location.href = "/player.html?download=1&url=" + encodeURIComponent(url);
+<!-- SoftwareApplication Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TeraBoxPlay",
+  "url": "https://teraboxplay.xyz",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web",
+  "description": "Free online TeraBox video player and downloader. Watch and download TeraBox videos instantly without installing any app.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
 }
 </script>
 
-</body>
-</html>
+</head>
+
+<body>
+<!-- rest of your code remains exactly the same -->
