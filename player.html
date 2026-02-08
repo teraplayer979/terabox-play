@@ -7,175 +7,29 @@
 <title>TeraBox Player – Watch Online</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background: radial-gradient(circle at top, #0f1b3d, #050814);
-  color: white;
-}
-
-/* Header */
-.header {
-  width: 100%;
-  padding: 18px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(10,15,35,0.6);
-  backdrop-filter: blur(12px);
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #4da3ff, #9b5cff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.nav a {
-  color: #cbd5ff;
-  margin-left: 20px;
-  text-decoration: none;
-}
-
-/* Container */
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 40px 20px;
-}
-
-/* Player card */
-.player-card {
-  background: rgba(255,255,255,0.05);
-  border-radius: 18px;
-  padding: 20px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 40px rgba(0,0,0,0.6);
-}
-
-video {
-  width: 100%;
-  border-radius: 12px;
-  background: black;
-}
-
-/* Skeleton loader */
-.skeleton {
-  width: 100%;
-  height: 300px;
-  border-radius: 12px;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0.05) 25%,
-    rgba(255,255,255,0.1) 50%,
-    rgba(255,255,255,0.05) 75%
-  );
-  background-size: 200% 100%;
-  animation: skeleton 1.5s infinite;
-}
-
-@keyframes skeleton {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Thumbnail */
-.thumbnail {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  display: none;
-}
-
-/* Title */
-.video-title {
-  text-align: center;
-  margin: 15px 0;
-  font-size: 22px;
-}
-
-/* Action buttons */
-.player-actions {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.player-actions button {
-  margin: 5px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.telegram-btn {
-  background: linear-gradient(90deg, #0088cc, #00aaff);
-  color: white;
-}
-
-/* Focus mode */
-.focus-mode {
-  background: black !important;
-}
-
-/* History */
-.history {
-  margin-top: 40px;
-}
-
-.history a {
-  display: block;
-  color: #a78bfa;
-  margin: 6px 0;
-  text-decoration: none;
-}
-
-/* Comments */
-.comments {
-  margin-top: 50px;
-  text-align: left;
-}
-
-.comment-box {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  margin-top: 10px;
-}
-
-.comment {
-  background: rgba(255,255,255,0.05);
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-}
-
-/* Ads */
-.ad-box {
-  margin: 25px 0;
-  padding: 20px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.05);
-  text-align: center;
-  color: #aaa;
-}
-
-footer {
-  text-align: center;
-  padding: 30px;
-  color: #aaa;
-  margin-top: 60px;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:radial-gradient(circle at top,#0f1b3d,#050814);color:white;}
+.header{width:100%;padding:18px 30px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,15,35,0.6);backdrop-filter:blur(12px);}
+.logo{font-size:22px;font-weight:bold;background:linear-gradient(90deg,#4da3ff,#9b5cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav a{color:#cbd5ff;margin-left:20px;text-decoration:none;}
+.container{max-width:1000px;margin:auto;padding:40px 20px;}
+.player-card{background:rgba(255,255,255,0.05);border-radius:18px;padding:20px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(0,0,0,0.6);}
+video{width:100%;border-radius:12px;background:black;}
+.skeleton{width:100%;height:300px;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,0.05)25%,rgba(255,255,255,0.1)50%,rgba(255,255,255,0.05)75%);background-size:200% 100%;animation:skeleton 1.5s infinite;display:flex;align-items:center;justify-content:center;font-size:22px;}
+@keyframes skeleton{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.video-title{text-align:center;margin:15px 0;font-size:22px;}
+.player-actions{text-align:center;margin-top:15px;}
+.player-actions button{margin:5px;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;}
+.telegram-btn{background:linear-gradient(90deg,#0088cc,#00aaff);color:white;}
+.focus-mode{background:black!important;}
+.history{margin-top:40px;}
+.history a{display:block;color:#a78bfa;margin:6px 0;text-decoration:none;}
+.comments{margin-top:50px;text-align:left;}
+.comment-box{width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;}
+.comment{background:rgba(255,255,255,0.05);padding:10px;margin-top:10px;border-radius:8px;}
+.ad-box{margin:25px 0;padding:20px;border-radius:12px;background:rgba(255,255,255,0.05);text-align:center;color:#aaa;}
+footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 </style>
-
 </head>
 
 <body>
@@ -193,11 +47,9 @@ footer {
 
   <div class="player-card">
 
-    <div id="skeleton" class="skeleton"></div>
+    <div id="skeleton" class="skeleton">Loading 0%</div>
 
-    <img id="thumbnail" class="thumbnail" />
     <h2 id="videoTitle" class="video-title"></h2>
-
     <video id="videoPlayer" controls></video>
 
     <div class="player-actions">
@@ -210,10 +62,8 @@ footer {
   </div>
 
   <div class="ad-box">Ad Space (Middle)</div>
-
   <div class="history" id="historyBox"></div>
 
-  <!-- Comments -->
   <div class="comments">
     <h3>Comments</h3>
     <input id="commentInput" class="comment-box" placeholder="Write a comment..." />
@@ -230,201 +80,138 @@ footer {
 </footer>
 
 <script>
-function getParam(name) {
-  const url = new URL(window.location.href);
+function getParam(name){
+  const url=new URL(window.location.href);
   return url.searchParams.get(name);
 }
 
-const teraboxLink = getParam("url");
-const player = document.getElementById("videoPlayer");
-const skeleton = document.getElementById("skeleton");
+const teraboxLink=getParam("url");
+const player=document.getElementById("videoPlayer");
+const skeleton=document.getElementById("skeleton");
+const titleBox=document.getElementById("videoTitle");
 
-async function fetchStream(retries = 4) {
-  try {
-    const res = await fetch("https://github-backend00.onrender.com/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ url: teraboxLink })
+/* auto title */
+if(teraboxLink && titleBox){
+  try{
+    const name=decodeURIComponent(teraboxLink.split("/").pop());
+    titleBox.innerText=name.substring(0,60);
+  }catch{
+    titleBox.innerText="TeraBox Video";
+  }
+}
+
+async function fetchStream(retries=4){
+  try{
+    const res=await fetch("https://github-backend00.onrender.com/api",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({url:teraboxLink})
     });
 
-    if (!res.ok) throw new Error("Server not ready");
+    if(!res.ok) throw new Error();
+    return await res.json();
 
-    const data = await res.json();
-    return data;
-
-  } catch (err) {
-    if (retries > 0) {
-      await new Promise(r => setTimeout(r, 3000));
-      return fetchStream(retries - 1);
-    } else {
-      console.log("Backend not responding");
+  }catch{
+    if(retries>0){
+      await new Promise(r=>setTimeout(r,3000));
+      return fetchStream(retries-1);
+    }else{
+      skeleton.innerText="Video not available";
       return null;
     }
   }
 }
 
-async function loadVideo() {
-  if (!teraboxLink) return;
+async function loadVideo(){
+  if(!teraboxLink) return;
 
-  player.style.display = "none";
-  skeleton.style.display = "block";
+  player.style.display="none";
+  skeleton.style.display="flex";
 
-  const data = await fetchStream();
+  const data=await fetchStream();
+  if(!data || !data.list || !data.list[0]) return;
 
-  if (!data || !data.list || !data.list[0]) {
-    skeleton.innerText = "Video not available.";
-    return;
-  }
-
-  const file = data.list[0];
-
-  const stream =
-    file.fast_stream_url?.["720p"] ||
-    file.fast_stream_url?.["480p"] ||
-    file.fast_stream_url?.["360p"] ||
+  const file=data.list[0];
+  const stream=
+    file.fast_stream_url?.["720p"]||
+    file.fast_stream_url?.["480p"]||
+    file.fast_stream_url?.["360p"]||
     file.stream_url;
 
-  if (!stream) {
-    skeleton.innerText = "Stream not available.";
-    return;
-  }
+  if(!stream) return;
 
-  player.src = stream;
+  player.src=stream;
 
-  player.onloadeddata = () => {
-    skeleton.style.display = "none";
-    player.style.display = "block";
+  /* real buffering */
+  player.addEventListener("progress",()=>{
+    if(player.buffered.length>0 && player.duration>0){
+      const percent=Math.round(
+        (player.buffered.end(0)/player.duration)*100
+      );
+      if(percent<100) skeleton.innerText="Loading "+percent+"%";
+    }
+  });
+
+  player.onloadeddata=()=>{
+    skeleton.innerText="Loading 100%";
+    setTimeout(()=>{
+      skeleton.style.display="none";
+      player.style.display="block";
+    },300);
   };
 }
 
 loadVideo();
 
-/* Resume playback */
-player.addEventListener("loadedmetadata", () => {
-  const key = "time_" + player.src;
-  const saved = localStorage.getItem(key);
-  if (saved) player.currentTime = saved;
+/* resume playback */
+player.addEventListener("loadedmetadata",()=>{
+  const key="time_"+player.src;
+  const saved=localStorage.getItem(key);
+  if(saved) player.currentTime=saved;
+});
+player.addEventListener("timeupdate",()=>{
+  const key="time_"+player.src;
+  localStorage.setItem(key,player.currentTime);
 });
 
-player.addEventListener("timeupdate", () => {
-  const key = "time_" + player.src;
-  localStorage.setItem(key, player.currentTime);
-});
-  <script>
-/* ===== BUFFERING PERCENTAGE ===== */
-const skeletonBox = document.getElementById("skeleton");
-
-player.addEventListener("progress", () => {
-  if (player.buffered.length > 0) {
-    const percent = Math.round(
-      (player.buffered.end(0) / player.duration) * 100
-    );
-    if (skeletonBox && percent < 100) {
-      skeletonBox.innerText = "Loading " + percent + "%";
-    }
-  }
-});
-
-player.addEventListener("canplay", () => {
-  if (skeletonBox) skeletonBox.innerText = "Loading 100%";
-});
-
-/* ===== AUTO TITLE FROM LINK ===== */
-const titleBox = document.getElementById("videoTitle");
-if (teraboxLink && titleBox) {
-  try {
-    const name = decodeURIComponent(teraboxLink.split("/").pop());
-    titleBox.innerText = name.substring(0, 60);
-  } catch {
-    titleBox.innerText = "TeraBox Video";
-  }
-}
-
-/* ===== COPY SHARE LINK ===== */
-function copyLink() {
+/* copy link */
+function copyLink(){
   navigator.clipboard.writeText(window.location.href);
   alert("Link copied");
 }
 
-/* ===== TELEGRAM SHARE ===== */
-function shareTelegram() {
-  const share =
-    "https://t.me/share/url?url=" +
-    encodeURIComponent(window.location.href);
-  window.open(share, "_blank");
+/* telegram */
+function shareTelegram(){
+  const share="https://t.me/share/url?url="+encodeURIComponent(window.location.href);
+  window.open(share,"_blank");
 }
 
-/* ===== FOCUS MODE ===== */
-function toggleFocus() {
+/* focus mode */
+function toggleFocus(){
   document.body.classList.toggle("focus-mode");
 }
 
-/* ===== HISTORY SYSTEM ===== */
-if (teraboxLink) {
-  let history = JSON.parse(localStorage.getItem("history") || "[]");
-  history = history.filter(item => item !== teraboxLink);
-  history.unshift(teraboxLink);
-  if (history.length > 5) history.pop();
-  localStorage.setItem("history", JSON.stringify(history));
-}
-
-const historyBox = document.getElementById("historyBox");
-let history = JSON.parse(localStorage.getItem("history") || "[]");
-
-if (historyBox && history.length > 0) {
-  historyBox.innerHTML = "<h3>Recently Viewed</h3>";
-  history.forEach(link => {
-    historyBox.innerHTML +=
-      `<a href="/player.html?url=${encodeURIComponent(link)}">${link}</a>`;
-  });
-}
-
-/* ===== COMMENTS SYSTEM ===== */
-function addComment() {
-  const input = document.getElementById("commentInput");
-  const list = document.getElementById("commentList");
-  if (!input.value) return;
-
-  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
+/* comments */
+function addComment(){
+  const input=document.getElementById("commentInput");
+  const list=document.getElementById("commentList");
+  if(!input.value) return;
+  let comments=JSON.parse(localStorage.getItem("comments")||"[]");
   comments.unshift(input.value);
-  localStorage.setItem("comments", JSON.stringify(comments));
-
+  localStorage.setItem("comments",JSON.stringify(comments));
   renderComments();
-  input.value = "";
+  input.value="";
 }
-
-function renderComments() {
-  const list = document.getElementById("commentList");
-  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
-  list.innerHTML = "";
-  comments.forEach(c => {
-    list.innerHTML += `<div class="comment">${c}</div>`;
+function renderComments(){
+  const list=document.getElementById("commentList");
+  let comments=JSON.parse(localStorage.getItem("comments")||"[]");
+  list.innerHTML="";
+  comments.forEach(c=>{
+    list.innerHTML+=`<div class="comment">${c}</div>`;
   });
 }
-
 renderComments();
-
-/* ===== INSTALL AS APP (PWA) ===== */
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  if (installBtn) installBtn.style.display = "inline-block";
-});
-
-if (installBtn) {
-  installBtn.addEventListener("click", async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt = null;
-    }
-  });
-}
 </script>
-</script>
+
 </body>
 </html>
