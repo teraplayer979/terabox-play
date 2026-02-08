@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>TeraBox Player – Watch Online</title>
-<meta name="description" content="Watch TeraBox videos online in a premium secure player.">
 
 <style>
 * {
@@ -67,6 +66,26 @@ video {
   background: black;
 }
 
+/* Quality buttons */
+.quality {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.quality button {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.quality button:hover {
+  background: rgba(120,140,255,0.4);
+}
+
 /* Buttons */
 .buttons {
   margin-top: 20px;
@@ -92,17 +111,23 @@ button {
   color: white;
 }
 
+/* History */
+.history {
+  margin-top: 40px;
+}
+
+.history a {
+  display: block;
+  color: #a78bfa;
+  margin: 6px 0;
+  text-decoration: none;
+}
+
 footer {
   text-align: center;
   padding: 30px;
   color: #aaa;
   margin-top: 60px;
-}
-
-footer a {
-  color: #a78bfa;
-  text-decoration: none;
-  margin: 0 6px;
 }
 </style>
 </head>
@@ -126,17 +151,25 @@ footer a {
     <video id="videoPlayer" controls></video>
   </div>
 
+  <!-- Quality selector -->
+  <div class="quality">
+    <button onclick="setQuality('360p')">360p</button>
+    <button onclick="setQuality('480p')">480p</button>
+    <button onclick="setQuality('720p')">720p</button>
+  </div>
+
   <div class="buttons">
     <button class="home-btn" onclick="goHome()">⬅ Back to Home</button>
     <button class="download-btn" id="downloadBtn">⬇ Download</button>
   </div>
 
+  <!-- History -->
+  <div class="history" id="historyBox"></div>
+
 </div>
 
 <footer>
-  © 2026 teraboxplay.xyz – All rights reserved<br><br>
-  <a href="/privacy.html">Privacy Policy</a> |
-  <a href="/terms.html">Terms of Service</a>
+  © 2026 teraboxplay.xyz
 </footer>
 
 <script>
@@ -146,20 +179,56 @@ function getParam(name) {
 }
 
 const videoUrl = getParam("url");
-const downloadMode = getParam("download");
-
 const player = document.getElementById("videoPlayer");
 const downloadBtn = document.getElementById("downloadBtn");
 
+/* Load video */
 if (videoUrl) {
   player.src = videoUrl;
-  downloadBtn.onclick = () => {
-    window.open(videoUrl, "_blank");
-  };
+  downloadBtn.onclick = () => window.open(videoUrl, "_blank");
+}
 
-  if (downloadMode === "1") {
-    window.open(videoUrl, "_blank");
+/* Quality switch (simple version) */
+function setQuality(q) {
+  alert("Quality switching requires API stream URLs.");
+}
+
+/* Resume playback */
+const videoKey = "video_" + videoUrl;
+
+player.addEventListener("loadedmetadata", () => {
+  const savedTime = localStorage.getItem(videoKey);
+  if (savedTime) {
+    player.currentTime = savedTime;
   }
+});
+
+player.addEventListener("timeupdate", () => {
+  localStorage.setItem(videoKey, player.currentTime);
+});
+
+/* History system */
+if (videoUrl) {
+  let history = JSON.parse(localStorage.getItem("history") || "[]");
+
+  history = history.filter(item => item !== videoUrl);
+  history.unshift(videoUrl);
+
+  if (history.length > 5) history.pop();
+
+  localStorage.setItem("history", JSON.stringify(history));
+}
+
+/* Show history */
+const historyBox = document.getElementById("historyBox");
+let history = JSON.parse(localStorage.getItem("history") || "[]");
+
+if (history.length > 0) {
+  historyBox.innerHTML = "<h3>Recently Viewed</h3>";
+  history.forEach(link => {
+    historyBox.innerHTML +=
+      `<a href="/player.html?url=${encodeURIComponent(link)}">${link}</a>`;
+  });
 }
 
 function goHome() {
