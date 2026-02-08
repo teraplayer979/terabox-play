@@ -312,6 +312,119 @@ player.addEventListener("timeupdate", () => {
   const key = "time_" + player.src;
   localStorage.setItem(key, player.currentTime);
 });
+  <script>
+/* ===== BUFFERING PERCENTAGE ===== */
+const skeletonBox = document.getElementById("skeleton");
+
+player.addEventListener("progress", () => {
+  if (player.buffered.length > 0) {
+    const percent = Math.round(
+      (player.buffered.end(0) / player.duration) * 100
+    );
+    if (skeletonBox && percent < 100) {
+      skeletonBox.innerText = "Loading " + percent + "%";
+    }
+  }
+});
+
+player.addEventListener("canplay", () => {
+  if (skeletonBox) skeletonBox.innerText = "Loading 100%";
+});
+
+/* ===== AUTO TITLE FROM LINK ===== */
+const titleBox = document.getElementById("videoTitle");
+if (teraboxLink && titleBox) {
+  try {
+    const name = decodeURIComponent(teraboxLink.split("/").pop());
+    titleBox.innerText = name.substring(0, 60);
+  } catch {
+    titleBox.innerText = "TeraBox Video";
+  }
+}
+
+/* ===== COPY SHARE LINK ===== */
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href);
+  alert("Link copied");
+}
+
+/* ===== TELEGRAM SHARE ===== */
+function shareTelegram() {
+  const share =
+    "https://t.me/share/url?url=" +
+    encodeURIComponent(window.location.href);
+  window.open(share, "_blank");
+}
+
+/* ===== FOCUS MODE ===== */
+function toggleFocus() {
+  document.body.classList.toggle("focus-mode");
+}
+
+/* ===== HISTORY SYSTEM ===== */
+if (teraboxLink) {
+  let history = JSON.parse(localStorage.getItem("history") || "[]");
+  history = history.filter(item => item !== teraboxLink);
+  history.unshift(teraboxLink);
+  if (history.length > 5) history.pop();
+  localStorage.setItem("history", JSON.stringify(history));
+}
+
+const historyBox = document.getElementById("historyBox");
+let history = JSON.parse(localStorage.getItem("history") || "[]");
+
+if (historyBox && history.length > 0) {
+  historyBox.innerHTML = "<h3>Recently Viewed</h3>";
+  history.forEach(link => {
+    historyBox.innerHTML +=
+      `<a href="/player.html?url=${encodeURIComponent(link)}">${link}</a>`;
+  });
+}
+
+/* ===== COMMENTS SYSTEM ===== */
+function addComment() {
+  const input = document.getElementById("commentInput");
+  const list = document.getElementById("commentList");
+  if (!input.value) return;
+
+  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
+  comments.unshift(input.value);
+  localStorage.setItem("comments", JSON.stringify(comments));
+
+  renderComments();
+  input.value = "";
+}
+
+function renderComments() {
+  const list = document.getElementById("commentList");
+  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
+  list.innerHTML = "";
+  comments.forEach(c => {
+    list.innerHTML += `<div class="comment">${c}</div>`;
+  });
+}
+
+renderComments();
+
+/* ===== INSTALL AS APP (PWA) ===== */
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (installBtn) installBtn.style.display = "inline-block";
+});
+
+if (installBtn) {
+  installBtn.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+    }
+  });
+}
+</script>
 </script>
 </body>
 </html>
