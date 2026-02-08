@@ -6,6 +6,8 @@
 
 <title>TeraBox Player – Watch Online</title>
 
+<link rel="manifest" href="/manifest.json">
+
 <style>
 * {
   margin: 0;
@@ -44,14 +46,12 @@ body {
   text-decoration: none;
 }
 
-/* Container */
 .container {
   max-width: 1000px;
   margin: auto;
   padding: 40px 20px;
 }
 
-/* Player card */
 .player-card {
   background: rgba(255,255,255,0.05);
   border-radius: 18px;
@@ -66,49 +66,83 @@ video {
   background: black;
 }
 
-/* Quality buttons */
-.quality {
-  text-align: center;
+/* Skeleton loader */
+.skeleton {
+  width: 100%;
+  height: 360px;
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.15) 50%,
+    rgba(255,255,255,0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.2s infinite;
+}
+
+@keyframes loading {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+.video-title {
   margin: 15px 0;
-}
-
-.quality button {
-  background: rgba(255,255,255,0.08);
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  margin: 4px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.quality button:hover {
-  background: rgba(120,140,255,0.4);
+  font-size: 20px;
 }
 
 /* Buttons */
-.buttons {
-  margin-top: 20px;
+.buttons, .player-actions {
   text-align: center;
+  margin-top: 15px;
 }
 
 button {
-  padding: 14px 28px;
-  margin: 10px;
-  font-size: 16px;
+  padding: 12px 24px;
+  margin: 8px;
+  font-size: 15px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-}
-
-.home-btn {
   background: linear-gradient(90deg, #3a7cff, #6b4dff);
   color: white;
 }
 
 .download-btn {
   background: linear-gradient(90deg, #ff7a18, #ff3d3d);
-  color: white;
+}
+
+/* Focus mode */
+.focus-mode {
+  background: black !important;
+}
+
+.focus-mode .header,
+.focus-mode footer,
+.focus-mode .comments,
+.focus-mode .history {
+  display: none;
+}
+
+/* Comments */
+.comments {
+  margin-top: 40px;
+}
+
+.comments textarea {
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.comment {
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
 }
 
 /* History */
@@ -130,22 +164,6 @@ footer {
   margin-top: 60px;
 }
 </style>
-
-<!-- VideoObject Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "VideoObject",
-  "name": "TeraBox Video Player",
-  "description": "Watch TeraBox videos online using TeraBoxPlay secure video player.",
-  "embedUrl": "https://teraboxplay.xyz/player.html",
-  "publisher": {
-    "@type": "Organization",
-    "name": "TeraBoxPlay"
-  }
-}
-</script>
-
 </head>
 
 <body>
@@ -164,20 +182,40 @@ footer {
 <div class="container">
 
   <div class="player-card">
+
+    <!-- Skeleton -->
+    <div id="skeleton" class="skeleton"></div>
+
+    <!-- Title -->
+    <h2 id="videoTitle" class="video-title"></h2>
+
+    <!-- Video -->
     <video id="videoPlayer" controls></video>
+
+    <!-- Actions -->
+    <div class="player-actions">
+      <button onclick="copyLink()">🔗 Copy Share Link</button>
+      <button onclick="toggleFocus()">🌙 Focus Mode</button>
+      <button id="installBtn" style="display:none;">📲 Install App</button>
+    </div>
+
   </div>
 
-  <div class="quality">
-    <button onclick="setQuality('360p')">360p</button>
-    <button onclick="setQuality('480p')">480p</button>
-    <button onclick="setQuality('720p')">720p</button>
-  </div>
-
+  <!-- Main buttons -->
   <div class="buttons">
-    <button class="home-btn" onclick="goHome()">⬅ Back to Home</button>
+    <button onclick="goHome()">⬅ Back to Home</button>
     <button class="download-btn" id="downloadBtn">⬇ Download</button>
   </div>
 
+  <!-- Comments -->
+  <div class="comments">
+    <h3>Comments</h3>
+    <textarea id="commentInput" placeholder="Write a comment..."></textarea>
+    <button onclick="addComment()">Post Comment</button>
+    <div id="commentList"></div>
+  </div>
+
+  <!-- History -->
   <div class="history" id="historyBox"></div>
 
 </div>
@@ -195,29 +233,39 @@ function getParam(name) {
 const videoUrl = getParam("url");
 const player = document.getElementById("videoPlayer");
 const downloadBtn = document.getElementById("downloadBtn");
+const skeleton = document.getElementById("skeleton");
+const titleEl = document.getElementById("videoTitle");
 
 if (videoUrl) {
   player.src = videoUrl;
   downloadBtn.onclick = () => window.open(videoUrl, "_blank");
+
+  try {
+    const name = decodeURIComponent(videoUrl.split("/").pop().split("?")[0]);
+    titleEl.textContent = name;
+  } catch {
+    titleEl.textContent = "TeraBox Video";
+  }
 }
 
-function setQuality(q) {
-  alert("Quality switching requires API stream URLs.");
-}
+/* Hide skeleton */
+player.addEventListener("loadeddata", () => {
+  skeleton.style.display = "none";
+});
 
+/* Resume playback */
 const videoKey = "video_" + videoUrl;
 
 player.addEventListener("loadedmetadata", () => {
   const savedTime = localStorage.getItem(videoKey);
-  if (savedTime) {
-    player.currentTime = savedTime;
-  }
+  if (savedTime) player.currentTime = savedTime;
 });
 
 player.addEventListener("timeupdate", () => {
   localStorage.setItem(videoKey, player.currentTime);
 });
 
+/* History */
 if (videoUrl) {
   let history = JSON.parse(localStorage.getItem("history") || "[]");
   history = history.filter(item => item !== videoUrl);
@@ -236,6 +284,59 @@ if (history.length > 0) {
       `<a href="/player.html?url=${encodeURIComponent(link)}">${link}</a>`;
   });
 }
+
+/* Copy link */
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href);
+  alert("Link copied!");
+}
+
+/* Focus mode */
+function toggleFocus() {
+  document.body.classList.toggle("focus-mode");
+}
+
+/* Comments */
+function addComment() {
+  const input = document.getElementById("commentInput");
+  const text = input.value.trim();
+  if (!text) return;
+
+  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
+  comments.unshift(text);
+  localStorage.setItem("comments", JSON.stringify(comments));
+  input.value = "";
+  loadComments();
+}
+
+function loadComments() {
+  const list = document.getElementById("commentList");
+  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
+  list.innerHTML = "";
+  comments.slice(0,10).forEach(c => {
+    const div = document.createElement("div");
+    div.className = "comment";
+    div.textContent = c;
+    list.appendChild(div);
+  });
+}
+loadComments();
+
+/* PWA install */
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = "inline-block";
+});
+
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt = null;
+});
 
 function goHome() {
   window.location.href = "/";
