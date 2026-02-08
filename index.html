@@ -23,6 +23,40 @@ body {
   overflow-x: hidden;
 }
 
+/* Premium header */
+.header {
+  width: 100%;
+  padding: 18px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10,15,35,0.6);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #4da3ff, #9b5cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav a {
+  color: #cbd5ff;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.nav a:hover {
+  color: white;
+}
+
 /* Animated background glow */
 body::before {
   content: "";
@@ -177,6 +211,15 @@ footer a:hover {
 
 <body>
 
+<header class="header">
+  <div class="logo">TeraBoxPlay</div>
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </nav>
+</header>
+
 <div class="container">
 
   <h1>TeraBox Video Player & Downloader</h1>
@@ -199,43 +242,16 @@ footer a:hover {
     <div class="feature">♾ Unlimited Use</div>
   </div>
 
-  <!-- NEW SEO CONTENT SECTION -->
   <div class="content">
-
     <h2>How to Play TeraBox Videos Online</h2>
     <p>
       TeraBoxPlay allows you to stream and download TeraBox videos directly in your browser. 
       No app installation or login is required. Simply paste your TeraBox link and start watching instantly.
     </p>
-
-    <h2>What is TeraBox Video Player?</h2>
     <p>
-      TeraBox Video Player is an online tool that allows users to stream and download
-      TeraBox videos directly in their browser. You don’t need to install any app or
-      create an account. Simply paste your TeraBox link and start watching instantly.
+      This tool is designed for fast, secure, and mobile-friendly playback. It works on all modern devices 
+      including smartphones, tablets, and desktops.
     </p>
-
-    <h2>Why Use TeraBoxPlay?</h2>
-    <p>
-      TeraBoxPlay is designed for speed, simplicity, and security. Our platform
-      provides smooth playback, fast download options, and a clean user interface
-      that works perfectly on mobile, tablet, and desktop devices.
-    </p>
-
-    <h2>How to Download TeraBox Videos</h2>
-    <p>
-      To download a TeraBox video, copy the public share link from TeraBox,
-      paste it into the input box above, and click the download button.
-      The system will process your link and provide a direct download option.
-    </p>
-
-    <h2>Supported Devices</h2>
-    <p>
-      Our online video player works on all modern browsers including
-      Chrome, Safari, Edge, and Firefox. It supports Android phones,
-      iPhones, iPads, Windows PCs, and Mac devices.
-    </p>
-
   </div>
 
   <footer>
