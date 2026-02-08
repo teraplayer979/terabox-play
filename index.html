@@ -49,7 +49,7 @@
 async function play() {
   const link = document.getElementById("link").value;
 
-  const res = await fetch("YOUR_API_URL", {
+  const res = await fetch("https://terabox-bot-production.up.railway.app/api/terabox",  {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
