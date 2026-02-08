@@ -229,7 +229,7 @@ footer {
   © 2026 teraboxplay.xyz
 </footer>
 
-<<script>
+<script>
 function getParam(name) {
   const url = new URL(window.location.href);
   return url.searchParams.get(name);
@@ -237,15 +237,10 @@ function getParam(name) {
 
 const teraboxLink = getParam("url");
 const player = document.getElementById("videoPlayer");
-const downloadBtn = document.getElementById("downloadBtn");
+const skeleton = document.getElementById("skeleton");
 
-async function loadVideo() {
-  if (!teraboxLink) return;
-
+async function fetchStream(retries = 4) {
   try {
-    // show loading state
-    player.style.display = "none";
-
     const res = await fetch("https://github-backend00.onrender.com/api", {
       method: "POST",
       headers: {
@@ -254,31 +249,54 @@ async function loadVideo() {
       body: JSON.stringify({ url: teraboxLink })
     });
 
+    if (!res.ok) throw new Error("Server not ready");
+
     const data = await res.json();
-
-    const file = data.list[0];
-
-    const stream =
-      file.fast_stream_url?.["720p"] ||
-      file.fast_stream_url?.["480p"] ||
-      file.fast_stream_url?.["360p"] ||
-      file.stream_url;
-
-    if (!stream) {
-      alert("Stream not available");
-      return;
-    }
-
-    // only now set player source
-    player.src = stream;
-    player.style.display = "block";
-
-    downloadBtn.onclick = () =>
-      window.open(file.download_link, "_blank");
+    return data;
 
   } catch (err) {
-    alert("Failed to load video");
+    if (retries > 0) {
+      await new Promise(r => setTimeout(r, 3000));
+      return fetchStream(retries - 1);
+    } else {
+      console.log("Backend not responding");
+      return null;
+    }
   }
+}
+
+async function loadVideo() {
+  if (!teraboxLink) return;
+
+  player.style.display = "none";
+  skeleton.style.display = "block";
+
+  const data = await fetchStream();
+
+  if (!data || !data.list || !data.list[0]) {
+    skeleton.innerText = "Video not available.";
+    return;
+  }
+
+  const file = data.list[0];
+
+  const stream =
+    file.fast_stream_url?.["720p"] ||
+    file.fast_stream_url?.["480p"] ||
+    file.fast_stream_url?.["360p"] ||
+    file.stream_url;
+
+  if (!stream) {
+    skeleton.innerText = "Stream not available.";
+    return;
+  }
+
+  player.src = stream;
+
+  player.onloadeddata = () => {
+    skeleton.style.display = "none";
+    player.style.display = "block";
+  };
 }
 
 loadVideo();
@@ -294,10 +312,6 @@ player.addEventListener("timeupdate", () => {
   const key = "time_" + player.src;
   localStorage.setItem(key, player.currentTime);
 });
-
-function goHome() {
-  window.location.href = "/";
-}
 </script>
 </body>
 </html>
