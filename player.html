@@ -130,6 +130,22 @@ footer {
   margin-top: 60px;
 }
 </style>
+
+<!-- VideoObject Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "TeraBox Video Player",
+  "description": "Watch TeraBox videos online using TeraBoxPlay secure video player.",
+  "embedUrl": "https://teraboxplay.xyz/player.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TeraBoxPlay"
+  }
+}
+</script>
+
 </head>
 
 <body>
@@ -151,7 +167,6 @@ footer {
     <video id="videoPlayer" controls></video>
   </div>
 
-  <!-- Quality selector -->
   <div class="quality">
     <button onclick="setQuality('360p')">360p</button>
     <button onclick="setQuality('480p')">480p</button>
@@ -163,7 +178,6 @@ footer {
     <button class="download-btn" id="downloadBtn">⬇ Download</button>
   </div>
 
-  <!-- History -->
   <div class="history" id="historyBox"></div>
 
 </div>
@@ -182,18 +196,15 @@ const videoUrl = getParam("url");
 const player = document.getElementById("videoPlayer");
 const downloadBtn = document.getElementById("downloadBtn");
 
-/* Load video */
 if (videoUrl) {
   player.src = videoUrl;
   downloadBtn.onclick = () => window.open(videoUrl, "_blank");
 }
 
-/* Quality switch (simple version) */
 function setQuality(q) {
   alert("Quality switching requires API stream URLs.");
 }
 
-/* Resume playback */
 const videoKey = "video_" + videoUrl;
 
 player.addEventListener("loadedmetadata", () => {
@@ -207,19 +218,14 @@ player.addEventListener("timeupdate", () => {
   localStorage.setItem(videoKey, player.currentTime);
 });
 
-/* History system */
 if (videoUrl) {
   let history = JSON.parse(localStorage.getItem("history") || "[]");
-
   history = history.filter(item => item !== videoUrl);
   history.unshift(videoUrl);
-
   if (history.length > 5) history.pop();
-
   localStorage.setItem("history", JSON.stringify(history));
 }
 
-/* Show history */
 const historyBox = document.getElementById("historyBox");
 let history = JSON.parse(localStorage.getItem("history") || "[]");
 
