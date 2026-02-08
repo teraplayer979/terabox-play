@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Watch TeraBox Videos Online – Free HD Player</title>
+<meta name="description" content="Watch TeraBox videos online instantly. Free HD streaming without downloading any app."/>
+
+<link rel="canonical" href="https://teraboxplay.xyz/watch-terabox-online.html" />
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #0f1b3d, #050814);
+  color: white;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 60px 20px;
+}
+
+h1 {
+  font-size: 40px;
+  background: linear-gradient(90deg, #4da3ff, #9b5cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  padding: 30px;
+  border-radius: 18px;
+  margin-top: 30px;
+  backdrop-filter: blur(12px);
+}
+
+input {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 14px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #3a7cff, #6b4dff);
+  color: white;
+}
+
+.content {
+  margin-top: 50px;
+  line-height: 1.8;
+}
+
+footer {
+  margin-top: 60px;
+  text-align: center;
+  color: #aaa;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Watch TeraBox Videos Online</h1>
+
+<div class="card">
+  <input id="url" placeholder="Paste your TeraBox link here..." />
+  <button onclick="play()">▶ Play Video</button>
+</div>
+
+<div class="content">
+  <h2>Instant TeraBox Streaming</h2>
+  <p>
+    With TeraBoxPlay, you can watch TeraBox videos online without downloading
+    any software. Just paste your link and start streaming instantly.
+  </p>
+
+  <h2>No App Required</h2>
+  <p>
+    Our web-based player works on all modern browsers, including Chrome,
+    Safari, Edge, and Firefox.
+  </p>
+</div>
+
+<footer>
+© 2026 teraboxplay.xyz
+</footer>
+
+</div>
+
+<script>
+function play() {
+  let url = document.getElementById("url").value;
+  if(!url) return alert("Paste link first");
+  window.location.href = "/player.html?url=" + encodeURIComponent(url);
+}
+</script>
+
+</body>
+</html>
