@@ -1,0 +1,8 @@
+{
+  "name": "TeraBoxPlay",
+  "short_name": "TeraBoxPlay",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050814",
+  "theme_color": "#3a7cff"
+}
