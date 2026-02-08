@@ -2,55 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>TeraBox Video Player & Downloader – Watch TeraBox Links Online</title>
-<meta name="description" content="Play and download TeraBox videos online instantly. No app required. Fast, free, and unlimited TeraBox video player and downloader." />
+<title>TeraBox Video Player & Downloader – Watch Online</title>
+<meta name="description" content="Play and download TeraBox videos instantly. Fast, secure, and free TeraBox video player with HD streaming."/>
+
 <link rel="canonical" href="https://teraboxplay.xyz/" />
 
 <style>
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #070b1a, #0f1b3d);
+}
+
+body {
+  background: radial-gradient(circle at top, #0f1b3d, #050814);
   color: white;
-  text-align: center;
+  overflow-x: hidden;
+}
+
+/* Animated background glow */
+body::before {
+  content: "";
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(100,120,255,0.2), transparent);
+  top: -200px;
+  left: -200px;
+  animation: float 12s infinite alternate ease-in-out;
+  z-index: -1;
+}
+
+@keyframes float {
+  from { transform: translate(0,0); }
+  to { transform: translate(200px,200px); }
 }
 
 .container {
   max-width: 900px;
   margin: auto;
-  padding: 40px 20px;
+  padding: 60px 20px;
+  text-align: center;
 }
 
 h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
+  font-size: 44px;
+  margin-bottom: 15px;
   background: linear-gradient(90deg, #4da3ff, #9b5cff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: fadeUp 1s ease forwards;
 }
 
 .subtext {
   color: #cbd5ff;
   margin-bottom: 40px;
+  animation: fadeUp 1.4s ease forwards;
 }
 
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glass card */
 .card {
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  animation: fadeUp 1.8s ease forwards;
 }
 
 input {
-  width: 80%;
-  padding: 15px;
-  border-radius: 10px;
+  width: 85%;
+  padding: 16px;
+  border-radius: 12px;
   border: none;
   font-size: 16px;
   margin-bottom: 20px;
+  outline: none;
+  transition: 0.3s;
+}
+
+input:focus {
+  box-shadow: 0 0 10px #5a7cff;
 }
 
 .buttons {
@@ -65,6 +105,7 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .play {
@@ -72,35 +113,53 @@ button {
   color: white;
 }
 
+.play:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(80,100,255,0.6);
+}
+
 .download {
   background: linear-gradient(90deg, #ff7a18, #ff3d3d);
   color: white;
 }
 
+.download:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(255,80,80,0.6);
+}
+
+/* Features */
 .features {
-  margin-top: 60px;
+  margin-top: 70px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
   gap: 20px;
 }
 
 .feature {
-  background: rgba(255,255,255,0.04);
-  padding: 20px;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 14px;
+  transition: 0.3s;
 }
 
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(100,120,255,0.4);
+}
+
+/* SEO content */
 .content {
-  margin-top: 60px;
+  margin-top: 70px;
   text-align: left;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 footer {
   margin-top: 60px;
   padding: 20px;
-  font-size: 14px;
   color: #aaa;
+  font-size: 14px;
 }
 </style>
 </head>
@@ -132,34 +191,13 @@ footer {
   <div class="content">
     <h2>How to Play TeraBox Videos Online</h2>
     <p>
-      TeraBoxPlay allows you to watch and download TeraBox videos directly in your browser. 
-      You don’t need to install any app or create an account. Simply paste your TeraBox link 
-      and start streaming instantly.
+      TeraBoxPlay allows you to stream and download TeraBox videos directly in your browser. 
+      No app installation or login is required. Simply paste your TeraBox link and start watching instantly.
     </p>
     <p>
-      This online TeraBox player works on all devices including mobile phones, tablets, 
-      and desktops. It provides fast loading speeds and secure video playback.
+      This tool is designed for fast, secure, and mobile-friendly playback. It works on all modern devices 
+      including smartphones, tablets, and desktops.
     </p>
-    <p>
-      Follow these steps:
-    </p>
-    <ul>
-      <li>Copy your TeraBox video link</li>
-      <li>Paste it into the input box above</li>
-      <li>Click Play or Download</li>
-    </ul>
-  </div>
-
-  <div class="content">
-    <h2>Frequently Asked Questions</h2>
-    <p><strong>Is this TeraBox player free?</strong><br>
-    Yes, it is completely free to use.</p>
-
-    <p><strong>Do I need to install anything?</strong><br>
-    No, everything works directly in your browser.</p>
-
-    <p><strong>Does it work on mobile?</strong><br>
-    Yes, it works on Android, iPhone, and tablets.</p>
   </div>
 
   <footer>
