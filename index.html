@@ -138,6 +138,51 @@ button {
   color: white;
 }
 
+/* Telegram bot section */
+.bot-section {
+  margin-top: 60px;
+}
+
+.bot-card {
+  background: linear-gradient(135deg, rgba(0,136,204,0.2), rgba(0,100,180,0.15));
+  border: 1px solid rgba(0,136,204,0.4);
+  padding: 30px;
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 30px rgba(0,136,204,0.3);
+  transition: 0.3s;
+}
+
+.bot-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 40px rgba(0,136,204,0.6);
+}
+
+.bot-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.bot-desc {
+  color: #cbd5ff;
+  margin-bottom: 20px;
+}
+
+.bot-btn {
+  display: inline-block;
+  padding: 14px 30px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #0088cc, #00aaff);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.bot-btn:hover {
+  transform: scale(1.05);
+}
+
 /* Popular pages */
 .popular {
   margin-top: 60px;
@@ -233,6 +278,19 @@ footer a:hover {
     <div class="buttons">
       <button class="play" onclick="play()">▶ Play</button>
       <button class="download" onclick="download()">⬇ Download</button>
+    </div>
+  </div>
+
+  <!-- Telegram Bot Section -->
+  <div class="bot-section">
+    <div class="bot-card">
+      <div class="bot-title">🚀 Use Our Telegram Bot</div>
+      <div class="bot-desc">
+        Watch and download TeraBox videos directly inside Telegram.
+      </div>
+      <a class="bot-btn" href="https://t.me/free_terabox_video_bot" target="_blank">
+        Open Telegram Bot
+      </a>
     </div>
   </div>
 
