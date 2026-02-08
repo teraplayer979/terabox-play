@@ -138,92 +138,27 @@ button {
   color: white;
 }
 
-/* Telegram bot section */
-.bot-section {
-  margin-top: 60px;
+/* Thumbnail */
+.thumb-wrap {
+  position: relative;
+  display: none;
+  margin-bottom: 15px;
 }
 
-.bot-card {
-  background: linear-gradient(135deg, rgba(0,136,204,0.2), rgba(0,100,180,0.15));
-  border: 1px solid rgba(0,136,204,0.4);
-  padding: 30px;
-  border-radius: 18px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 30px rgba(0,136,204,0.3);
-  transition: 0.3s;
-}
-
-.bot-card:hover {
-  transform: translateY(-5px);
-}
-
-.bot-title {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.bot-desc {
-  color: #cbd5ff;
-  margin-bottom: 20px;
-}
-
-.bot-btn {
-  display: inline-block;
-  padding: 14px 30px;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #0088cc, #00aaff);
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-/* Popular pages */
-.popular {
-  margin-top: 70px;
-}
-
-.popular h2 {
-  margin-bottom: 25px;
-}
-
-.popular-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 20px;
-}
-
-.popular-card {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 14px;
-  text-decoration: none;
-  color: white;
-  transition: 0.3s;
-}
-
-.popular-card:hover {
-  transform: translateY(-5px);
-}
-
-footer {
-  margin-top: 70px;
-  padding: 20px;
-  color: #aaa;
-  font-size: 14px;
-}
-
-footer a {
-  color: #a78bfa;
-  text-decoration: none;
-  margin: 0 6px;
-}
-
-/* === ADDED FEATURES === */
 .thumbnail {
   width: 100%;
   border-radius: 12px;
-  margin-bottom: 15px;
-  display: none;
+}
+
+.thumb-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.7);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: white;
 }
 
 .telegram-btn {
@@ -239,6 +174,19 @@ footer a {
   text-align: center;
   font-size: 14px;
   color: #aaa;
+}
+
+footer {
+  margin-top: 70px;
+  padding: 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+footer a {
+  color: #a78bfa;
+  text-decoration: none;
+  margin: 0 6px;
 }
 </style>
 </head>
@@ -268,35 +216,17 @@ footer a {
 
   <div class="card">
     <input id="url" placeholder="Paste your TeraBox link here..." />
-    <img id="thumb" class="thumbnail" />
+
+    <!-- Thumbnail -->
+    <div class="thumb-wrap" id="thumbWrap">
+      <span class="thumb-label">Screenshot</span>
+      <img id="thumb" class="thumbnail" />
+    </div>
 
     <div class="buttons">
       <button class="play" onclick="play()">▶ Play</button>
       <button class="download" onclick="download()">⬇ Download</button>
       <button class="telegram-btn" onclick="shareTG()">📤 Telegram</button>
-    </div>
-  </div>
-
-  <!-- Telegram Bot Section -->
-  <div class="bot-section">
-    <div class="bot-card">
-      <div class="bot-title">🚀 Use Our Telegram Bot</div>
-      <div class="bot-desc">
-        Watch and download TeraBox videos directly inside Telegram.
-      </div>
-      <a class="bot-btn" href="https://t.me/free_terabox_video_bot" target="_blank">
-        Open Telegram Bot
-      </a>
-    </div>
-  </div>
-
-  <!-- Popular pages -->
-  <div class="popular">
-    <h2>Popular Pages</h2>
-    <div class="popular-grid">
-      <a class="popular-card" href="/terabox-video-player.html">▶ TeraBox Video Player</a>
-      <a class="popular-card" href="/terabox-downloader.html">⬇ TeraBox Downloader</a>
-      <a class="popular-card" href="/watch-terabox-online.html">🎬 Watch Online</a>
     </div>
   </div>
 
@@ -322,10 +252,10 @@ function download() {
   window.location.href = "/player.html?download=1&url=" + encodeURIComponent(url);
 }
 
-/* Thumbnail preview */
 /* Real thumbnail preview from API */
 const input = document.getElementById("url");
 const thumb = document.getElementById("thumb");
+const thumbWrap = document.getElementById("thumbWrap");
 
 let thumbTimeout;
 
@@ -334,11 +264,10 @@ input.addEventListener("input", () => {
 
   const url = input.value.trim();
   if (!url.includes("http")) {
-    thumb.style.display = "none";
+    thumbWrap.style.display = "none";
     return;
   }
 
-  /* delay to avoid too many API calls while typing */
   thumbTimeout = setTimeout(async () => {
     try {
       const res = await fetch("https://github-backend00.onrender.com/api", {
@@ -353,16 +282,17 @@ input.addEventListener("input", () => {
 
       if (data && data.list && data.list[0] && data.list[0].thumb) {
         thumb.src = data.list[0].thumb;
-        thumb.style.display = "block";
+        thumbWrap.style.display = "block";
       } else {
-        thumb.style.display = "none";
+        thumbWrap.style.display = "none";
       }
 
     } catch (e) {
-      thumb.style.display = "none";
+      thumbWrap.style.display = "none";
     }
   }, 800);
 });
+
 /* Telegram share */
 function shareTG() {
   let url = document.getElementById("url").value;
