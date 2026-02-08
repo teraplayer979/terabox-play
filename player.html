@@ -6,8 +6,6 @@
 
 <title>TeraBox Player – Watch Online</title>
 
-<link rel="manifest" href="/manifest.json">
-
 <style>
 * {
   margin: 0;
@@ -46,12 +44,14 @@ body {
   text-decoration: none;
 }
 
+/* Container */
 .container {
   max-width: 1000px;
   margin: auto;
   padding: 40px 20px;
 }
 
+/* Player card */
 .player-card {
   background: rgba(255,255,255,0.05);
   border-radius: 18px;
@@ -69,80 +69,60 @@ video {
 /* Skeleton loader */
 .skeleton {
   width: 100%;
-  height: 360px;
+  height: 300px;
   border-radius: 12px;
   background: linear-gradient(
     90deg,
     rgba(255,255,255,0.05) 25%,
-    rgba(255,255,255,0.15) 50%,
+    rgba(255,255,255,0.1) 50%,
     rgba(255,255,255,0.05) 75%
   );
   background-size: 200% 100%;
-  animation: loading 1.2s infinite;
+  animation: skeleton 1.5s infinite;
 }
 
-@keyframes loading {
-  from { background-position: 200% 0; }
-  to { background-position: -200% 0; }
+@keyframes skeleton {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
+/* Thumbnail */
+.thumbnail {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  display: none;
+}
+
+/* Title */
 .video-title {
+  text-align: center;
   margin: 15px 0;
-  font-size: 20px;
+  font-size: 22px;
 }
 
-/* Buttons */
-.buttons, .player-actions {
+/* Action buttons */
+.player-actions {
   text-align: center;
   margin-top: 15px;
 }
 
-button {
-  padding: 12px 24px;
-  margin: 8px;
-  font-size: 15px;
-  border: none;
+.player-actions button {
+  margin: 5px;
+  padding: 10px 16px;
   border-radius: 8px;
+  border: none;
   cursor: pointer;
-  background: linear-gradient(90deg, #3a7cff, #6b4dff);
-  color: white;
 }
 
-.download-btn {
-  background: linear-gradient(90deg, #ff7a18, #ff3d3d);
+.telegram-btn {
+  background: linear-gradient(90deg, #0088cc, #00aaff);
+  color: white;
 }
 
 /* Focus mode */
 .focus-mode {
   background: black !important;
-}
-
-.focus-mode .header,
-.focus-mode footer,
-.focus-mode .comments,
-.focus-mode .history {
-  display: none;
-}
-
-/* Comments */
-.comments {
-  margin-top: 40px;
-}
-
-.comments textarea {
-  width: 100%;
-  height: 80px;
-  border-radius: 10px;
-  border: none;
-  padding: 10px;
-  margin-top: 10px;
-}
-
-.comment {
-  background: rgba(255,255,255,0.05);
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
 }
 
 /* History */
@@ -157,6 +137,37 @@ button {
   text-decoration: none;
 }
 
+/* Comments */
+.comments {
+  margin-top: 50px;
+  text-align: left;
+}
+
+.comment-box {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 10px;
+}
+
+.comment {
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+/* Ads */
+.ad-box {
+  margin: 25px 0;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  text-align: center;
+  color: #aaa;
+}
+
 footer {
   text-align: center;
   padding: 30px;
@@ -164,6 +175,7 @@ footer {
   margin-top: 60px;
 }
 </style>
+
 </head>
 
 <body>
@@ -172,51 +184,44 @@ footer {
   <div class="logo">TeraBoxPlay</div>
   <nav class="nav">
     <a href="/">Home</a>
-    <a href="/about.html">About</a>
-    <a href="/contact.html">Contact</a>
-    <a href="/privacy.html">Privacy</a>
-    <a href="/terms.html">Terms</a>
   </nav>
 </header>
 
 <div class="container">
 
+  <div class="ad-box">Ad Space (Top Banner)</div>
+
   <div class="player-card">
 
-    <!-- Skeleton -->
     <div id="skeleton" class="skeleton"></div>
 
-    <!-- Title -->
+    <img id="thumbnail" class="thumbnail" />
     <h2 id="videoTitle" class="video-title"></h2>
 
-    <!-- Video -->
     <video id="videoPlayer" controls></video>
 
-    <!-- Actions -->
     <div class="player-actions">
       <button onclick="copyLink()">🔗 Copy Share Link</button>
       <button onclick="toggleFocus()">🌙 Focus Mode</button>
+      <button class="telegram-btn" onclick="shareTelegram()">📤 Share Telegram</button>
       <button id="installBtn" style="display:none;">📲 Install App</button>
     </div>
 
   </div>
 
-  <!-- Main buttons -->
-  <div class="buttons">
-    <button onclick="goHome()">⬅ Back to Home</button>
-    <button class="download-btn" id="downloadBtn">⬇ Download</button>
-  </div>
+  <div class="ad-box">Ad Space (Middle)</div>
+
+  <div class="history" id="historyBox"></div>
 
   <!-- Comments -->
   <div class="comments">
     <h3>Comments</h3>
-    <textarea id="commentInput" placeholder="Write a comment..."></textarea>
-    <button onclick="addComment()">Post Comment</button>
+    <input id="commentInput" class="comment-box" placeholder="Write a comment..." />
+    <button onclick="addComment()">Post</button>
     <div id="commentList"></div>
   </div>
 
-  <!-- History -->
-  <div class="history" id="historyBox"></div>
+  <div class="ad-box">Ad Space (Bottom)</div>
 
 </div>
 
@@ -232,33 +237,52 @@ function getParam(name) {
 
 const videoUrl = getParam("url");
 const player = document.getElementById("videoPlayer");
-const downloadBtn = document.getElementById("downloadBtn");
 const skeleton = document.getElementById("skeleton");
-const titleEl = document.getElementById("videoTitle");
+const thumbnail = document.getElementById("thumbnail");
+const title = document.getElementById("videoTitle");
 
+/* Load video */
 if (videoUrl) {
   player.src = videoUrl;
-  downloadBtn.onclick = () => window.open(videoUrl, "_blank");
 
-  try {
-    const name = decodeURIComponent(videoUrl.split("/").pop().split("?")[0]);
-    titleEl.textContent = name;
-  } catch {
-    titleEl.textContent = "TeraBox Video";
-  }
+  // Thumbnail
+  thumbnail.src = videoUrl;
+  thumbnail.style.display = "block";
+
+  // Title
+  const fileName = decodeURIComponent(videoUrl.split("/").pop());
+  title.innerText = fileName;
 }
 
-/* Hide skeleton */
 player.addEventListener("loadeddata", () => {
   skeleton.style.display = "none";
 });
+
+/* Copy share link */
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href);
+  alert("Link copied!");
+}
+
+/* Focus mode */
+function toggleFocus() {
+  document.body.classList.toggle("focus-mode");
+}
+
+/* Telegram share */
+function shareTelegram() {
+  const shareUrl = encodeURIComponent(window.location.href);
+  window.open(`https://t.me/share/url?url=${shareUrl}`, "_blank");
+}
 
 /* Resume playback */
 const videoKey = "video_" + videoUrl;
 
 player.addEventListener("loadedmetadata", () => {
   const savedTime = localStorage.getItem(videoKey);
-  if (savedTime) player.currentTime = savedTime;
+  if (savedTime) {
+    player.currentTime = savedTime;
+  }
 });
 
 player.addEventListener("timeupdate", () => {
@@ -285,62 +309,46 @@ if (history.length > 0) {
   });
 }
 
-/* Copy link */
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href);
-  alert("Link copied!");
-}
-
-/* Focus mode */
-function toggleFocus() {
-  document.body.classList.toggle("focus-mode");
-}
-
 /* Comments */
 function addComment() {
   const input = document.getElementById("commentInput");
-  const text = input.value.trim();
+  const text = input.value;
   if (!text) return;
 
   let comments = JSON.parse(localStorage.getItem("comments") || "[]");
-  comments.unshift(text);
+  comments.push(text);
   localStorage.setItem("comments", JSON.stringify(comments));
+
   input.value = "";
-  loadComments();
+  renderComments();
 }
 
-function loadComments() {
+function renderComments() {
   const list = document.getElementById("commentList");
-  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
   list.innerHTML = "";
-  comments.slice(0,10).forEach(c => {
-    const div = document.createElement("div");
-    div.className = "comment";
-    div.textContent = c;
-    list.appendChild(div);
+  let comments = JSON.parse(localStorage.getItem("comments") || "[]");
+
+  comments.forEach(c => {
+    list.innerHTML += `<div class="comment">${c}</div>`;
   });
 }
-loadComments();
 
-/* PWA install */
+renderComments();
+
+/* Install as app */
 let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
-
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  installBtn.style.display = "inline-block";
+  document.getElementById("installBtn").style.display = "inline-block";
 });
 
-installBtn.addEventListener("click", async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt = null;
+document.getElementById("installBtn").addEventListener("click", async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt = null;
+  }
 });
-
-function goHome() {
-  window.location.href = "/";
-}
 </script>
 
 </body>
