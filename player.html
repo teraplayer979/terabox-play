@@ -103,6 +103,15 @@ if(teraboxLink && titleBox){
   }
 }
 
+/* ===== NETFLIX STYLE LOADER ===== */
+let fakePercent = 0;
+let fakeInterval = setInterval(()=>{
+  if(fakePercent < 60){
+    fakePercent += Math.random()*5;
+    skeleton.innerText = "Loading " + Math.floor(fakePercent) + "%";
+  }
+},200);
+
 async function fetchStream(retries=4){
   try{
     const res=await fetch("https://github-backend00.onrender.com/api",{
@@ -134,6 +143,8 @@ async function loadVideo(){
   const data=await fetchStream();
   if(!data || !data.list || !data.list[0]) return;
 
+  clearInterval(fakeInterval); // stop fake loader
+
   const file=data.list[0];
 
   /* === API THUMBNAIL === */
@@ -162,7 +173,7 @@ async function loadVideo(){
   player.addEventListener("progress",()=>{
     if(player.buffered.length>0 && player.duration>0){
       const percent=Math.round(
-        (player.buffered.end(0)/player.duration)*100
+        (player.buffered.end(0)/player.duration)*40 + 60
       );
       if(percent<100){
         skeleton.innerText="Loading "+percent+"%";
@@ -170,11 +181,12 @@ async function loadVideo(){
     }
   });
 
-  player.onloadeddata=()=>{
+  player.oncanplay=()=>{
     skeleton.innerText="Loading 100%";
     setTimeout(()=>{
       skeleton.style.display="none";
       player.style.display="block";
+      player.play();
     },300);
   };
 }
