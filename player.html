@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -105,11 +105,11 @@ if(teraboxLink && titleBox){
 /* ===== NETFLIX STYLE LOADER ===== */
 let fakePercent = 0;
 let fakeInterval = setInterval(()=>{
-  if(fakePercent < 60){
-    fakePercent += Math.random()*5;
+  if(fakePercent < 70){
+    fakePercent += Math.random()*4;
     skeleton.innerText = "Loading " + Math.floor(fakePercent) + "%";
   }
-},200);
+},180);
 
 async function fetchStream(retries=4){
   try{
@@ -124,7 +124,7 @@ async function fetchStream(retries=4){
 
   }catch{
     if(retries>0){
-      await new Promise(r=>setTimeout(r,3000));
+      await new Promise(r=>setTimeout(r,2500));
       return fetchStream(retries-1);
     }else{
       skeleton.innerText="Video not available";
@@ -160,7 +160,7 @@ async function loadVideo(){
   player.addEventListener("progress",()=>{
     if(player.buffered.length>0 && player.duration>0){
       const percent=Math.round(
-        (player.buffered.end(0)/player.duration)*40 + 60
+        (player.buffered.end(0)/player.duration)*30 + 70
       );
       if(percent<100){
         skeleton.innerText="Loading "+percent+"%";
@@ -174,7 +174,7 @@ async function loadVideo(){
       skeleton.style.display="none";
       player.style.display="block";
       player.play();
-    },300);
+    },250);
   };
 }
 
