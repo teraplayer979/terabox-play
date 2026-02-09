@@ -327,24 +327,10 @@ input.addEventListener("input",()=>{
 
   thumbTimeout=setTimeout(async()=>{
     try{
-      /* STEP 1: resolve short link */
-      let finalUrl = url;
-
-      try{
-        const head = await fetch(url, {
-          method: "HEAD",
-          redirect: "follow"
-        });
-        finalUrl = head.url || url;
-      }catch{
-        finalUrl = url;
-      }
-
-      /* STEP 2: call API with final link */
       const res=await fetch("https://github-backend00.onrender.com/api",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({url:finalUrl})
+        body:JSON.stringify({url:url})
       });
 
       const data=await res.json();
