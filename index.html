@@ -176,6 +176,34 @@ button {
   color: #aaa;
 }
 
+/* Popular pages */
+.popular {
+  margin-top: 70px;
+}
+
+.popular h2 {
+  margin-bottom: 25px;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 20px;
+}
+
+.popular-card {
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.popular-card:hover {
+  transform: translateY(-5px);
+}
+
 footer {
   margin-top: 70px;
   padding: 20px;
@@ -227,6 +255,22 @@ footer a {
       <button class="play" onclick="play()">▶ Play</button>
       <button class="download" onclick="download()">⬇ Download</button>
       <button class="telegram-btn" onclick="shareTG()">📤 Telegram</button>
+    </div>
+  </div>
+
+  <!-- Popular pages -->
+  <div class="popular">
+    <h2>Popular Pages</h2>
+    <div class="popular-grid">
+      <a class="popular-card" href="/terabox-video-player.html">
+        ▶ TeraBox Video Player
+      </a>
+      <a class="popular-card" href="/terabox-downloader.html">
+        ⬇ TeraBox Downloader
+      </a>
+      <a class="popular-card" href="/watch-terabox-online.html">
+        🎬 Watch Online
+      </a>
     </div>
   </div>
 
