@@ -219,6 +219,10 @@ async function loadVideo(){
   }
 
   player.src = stream;
+
+// Fast start warm-up
+player.muted = true;
+player.play().catch(()=>{});
 }
 
 loadVideo();
@@ -278,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loader.style.display = "flex";
   });
 
-  video.addEventListener("canplay", () => {
+  video.addEventListener("loadeddata", () => {
     loader.style.opacity = "0";
     setTimeout(() => {
       loader.style.display = "none";
