@@ -43,14 +43,26 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
 <div class="container">
 
-  <div class="ad-box">Ad Space (Top Banner)</div>
+  <!-- TOP AD -->
+  <div class="ad-box">
+    <script>
+      atOptions = {
+        'key' : '07f225439358aa450e7cfdd702a47568',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    </script>
+    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
+  </div>
 
   <div class="player-card">
 
     <div id="skeleton" class="skeleton">Loading 0%</div>
 
     <h2 id="videoTitle" class="video-title"></h2>
-    <video id="videoPlayer" controls></video>
+    <video id="videoPlayer" controls preload="metadata"></video>
 
     <div class="player-actions">
       <button onclick="copyLink()">🔗 Copy Share Link</button>
@@ -61,7 +73,20 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
   </div>
 
-  <div class="ad-box">Ad Space (Middle)</div>
+  <!-- MIDDLE AD -->
+  <div class="ad-box">
+    <script>
+      atOptions = {
+        'key' : '07f225439358aa450e7cfdd702a47568',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
+  </div>
+
   <div class="history" id="historyBox"></div>
 
   <div class="comments">
@@ -71,7 +96,19 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
     <div id="commentList"></div>
   </div>
 
-  <div class="ad-box">Ad Space (Bottom)</div>
+  <!-- BOTTOM AD -->
+  <div class="ad-box">
+    <script>
+      atOptions = {
+        'key' : '07f225439358aa450e7cfdd702a47568',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
+  </div>
 
 </div>
 
@@ -91,7 +128,6 @@ const player=document.getElementById("videoPlayer");
 const skeleton=document.getElementById("skeleton");
 const titleBox=document.getElementById("videoTitle");
 
-/* auto title */
 if(teraboxLink && titleBox){
   try{
     const name=decodeURIComponent(teraboxLink.split("/").pop());
@@ -101,59 +137,39 @@ if(teraboxLink && titleBox){
   }
 }
 
-/* ===== NETFLIX STYLE LOADER ===== */
-let fakePercent = 0;
-let fakeInterval = setInterval(()=>{
-  if(fakePercent < 60){
-    fakePercent += Math.random()*5;
-    skeleton.innerText = "Loading " + Math.floor(fakePercent) + "%";
-  }
-},200);
+let fakePercent = 20;
+skeleton.innerText = "Loading 20%";
 
-async function fetchStream(retries=4){
+async function fetchStream(){
   try{
     const res=await fetch("https://github-backend00.onrender.com/api",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({url:teraboxLink})
     });
-
     if(!res.ok) throw new Error();
     return await res.json();
-
   }catch{
-    if(retries>0){
-      await new Promise(r=>setTimeout(r,3000));
-      return fetchStream(retries-1);
-    }else{
-      skeleton.innerText="Video not available";
-      return null;
-    }
+    skeleton.innerText="Video not available";
+    return null;
   }
 }
 
 async function loadVideo(){
   if(!teraboxLink) return;
 
-  player.style.display="none";
-  skeleton.style.display="flex";
-
   const data=await fetchStream();
   if(!data || !data.list || !data.list[0]) return;
-
-  clearInterval(fakeInterval);
 
   const file=data.list[0];
 
   const stream =
     file.fast_stream_url?.["720p"] ||
     file.fast_stream_url?.["480p"] ||
-    file.fast_stream_url?.["360p"] ||
     file.stream_url;
 
   if(!stream) return;
 
-  /* DOWNLOAD MODE */
   if(downloadMode){
     window.location.href = file.download_link || stream;
     return;
@@ -161,31 +177,15 @@ async function loadVideo(){
 
   player.src = stream;
 
-  /* real buffering */
-  player.addEventListener("progress",()=>{
-    if(player.buffered.length>0 && player.duration>0){
-      const percent=Math.round(
-        (player.buffered.end(0)/player.duration)*40 + 60
-      );
-      if(percent<100){
-        skeleton.innerText="Loading "+percent+"%";
-      }
-    }
-  });
-
-  player.oncanplay=()=>{
-    skeleton.innerText="Loading 100%";
-    setTimeout(()=>{
-      skeleton.style.display="none";
-      player.style.display="block";
-      player.play();
-    },300);
+  player.onloadeddata=()=>{
+    skeleton.style.display="none";
+    player.style.display="block";
+    player.play();
   };
 }
 
 loadVideo();
 
-/* resume playback */
 player.addEventListener("loadedmetadata",()=>{
   const key="time_"+player.src;
   const saved=localStorage.getItem(key);
@@ -196,24 +196,20 @@ player.addEventListener("timeupdate",()=>{
   localStorage.setItem(key,player.currentTime);
 });
 
-/* copy link */
 function copyLink(){
   navigator.clipboard.writeText(window.location.href);
   alert("Link copied");
 }
 
-/* telegram */
 function shareTelegram(){
   const share="https://t.me/share/url?url="+encodeURIComponent(window.location.href);
   window.open(share,"_blank");
 }
 
-/* focus mode */
 function toggleFocus(){
   document.body.classList.toggle("focus-mode");
 }
 
-/* comments */
 function addComment(){
   const input=document.getElementById("commentInput");
   if(!input.value) return;
