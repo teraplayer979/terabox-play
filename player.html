@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>TeraBox Player – Watch Online</title>
+  <link rel="preconnect" href="https://github-backend00.onrender.com">
+<link rel="dns-prefetch" href="https://github-backend00.onrender.com">
+  
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
@@ -104,11 +107,12 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
       <!-- Video Player -->
       <video id="videoPlayer"
-             controls
-             preload="auto"
-             playsinline
-             webkit-playsinline>
-      </video>
+       controls
+       preload="metadata"
+       playsinline
+       webkit-playsinline
+       muted>
+</video>
 
     </div>
 
@@ -219,6 +223,10 @@ async function loadVideo(){
   }
 
   player.src = stream;
+
+// instant warm-up play
+player.muted = true;
+player.play().catch(()=>{});
 
 // Fast start warm-up
 player.muted = true;
