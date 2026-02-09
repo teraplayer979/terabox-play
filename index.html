@@ -320,14 +320,15 @@ const input=document.getElementById("url");
 const thumb=document.getElementById("thumb");
 const thumbWrap=document.getElementById("thumbWrap");
 
-let thumbTimeout;
-
 input.addEventListener("change", fetchThumbnail);
 input.addEventListener("paste", fetchThumbnail);
 
 async function fetchThumbnail(){
   const url = input.value.trim();
-  if(!url.includes("http")) return;
+  if(!url.includes("http")){
+    thumbWrap.style.display="none";
+    return;
+  }
 
   try{
     const res = await fetch("https://github-backend00.onrender.com/api",{
@@ -350,24 +351,21 @@ async function fetchThumbnail(){
       if(thumbUrl){
         thumb.src = thumbUrl;
         thumbWrap.style.display = "block";
+        return;
       }
     }
+
+    /* fallback screenshot */
+    thumb.src = "https://image.thum.io/get/width/800/" + encodeURIComponent(url);
+    thumbWrap.style.display = "block";
+
   }catch(e){
-    thumbWrap.style.display="none";
+    /* final fallback */
+    thumb.src = "https://image.thum.io/get/width/800/" + encodeURIComponent(url);
+    thumbWrap.style.display = "block";
   }
 }
 
-      /* === Fallback screenshot if API fails === */
-      thumb.src = "https://image.thum.io/get/width/800/" + encodeURIComponent(url);
-      thumbWrap.style.display = "block";
-
-    }catch(e){
-      /* === Final fallback === */
-      thumb.src = "https://image.thum.io/get/width/800/" + encodeURIComponent(url);
-      thumbWrap.style.display = "block";
-    }
-  
-});
 function shareTG(){
   let url=document.getElementById("url").value;
   if(!url) return alert("Paste link first");
