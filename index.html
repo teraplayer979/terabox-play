@@ -327,27 +327,55 @@ input.addEventListener("input",()=>{
 
   thumbTimeout=setTimeout(async()=>{
     try{
+      /* STEP 1: resolve short link */
+      let finalUrl = url;
+
+      try{
+        const head = await fetch(url, {
+          method: "HEAD",
+          redirect: "follow"
+        });
+        finalUrl = head.url || url;
+      }catch{
+        finalUrl = url;
+      }
+
+      /* STEP 2: call API with final link */
       const res=await fetch("https://github-backend00.onrender.com/api",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({url})
+        body:JSON.stringify({url:finalUrl})
       });
 
       const data=await res.json();
 
-      if(data && data.list && data.list[0] && data.list[0].thumb){
-        thumb.src=data.list[0].thumb;
-        thumbWrap.style.display="block";
+      if(data && data.list && data.list[0]){
+        const file = data.list[0];
+
+        const thumbUrl =
+          file.thumb ||
+          file.thumbnail ||
+          file.image ||
+          file.poster ||
+          file.cover ||
+          file.pic;
+
+        if(thumbUrl){
+          thumb.src = thumbUrl;
+          thumbWrap.style.display = "block";
+        }else{
+          thumbWrap.style.display = "none";
+        }
       }else{
-        thumbWrap.style.display="none";
+        thumbWrap.style.display = "none";
       }
 
-    }catch{
+    }catch(e){
+      console.log("Thumbnail error:", e);
       thumbWrap.style.display="none";
     }
   },800);
 });
-
 function shareTG(){
   let url=document.getElementById("url").value;
   if(!url) return alert("Paste link first");
