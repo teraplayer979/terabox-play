@@ -327,6 +327,7 @@ input.addEventListener("input",()=>{
 
   thumbTimeout=setTimeout(async()=>{
     try{
+      /* === Try API thumbnail first === */
       const res=await fetch("https://github-backend00.onrender.com/api",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
@@ -349,16 +350,18 @@ input.addEventListener("input",()=>{
         if(thumbUrl){
           thumb.src = thumbUrl;
           thumbWrap.style.display = "block";
-        }else{
-          thumbWrap.style.display = "none";
+          return;
         }
-      }else{
-        thumbWrap.style.display = "none";
       }
 
+      /* === Fallback screenshot if API fails === */
+      thumb.src = "https://image.thum.io/get/width/800/" + encodeURIComponent(url);
+      thumbWrap.style.display = "block";
+
     }catch(e){
-      console.log("Thumbnail error:", e);
-      thumbWrap.style.display="none";
+      /* === Final fallback === */
+      thumb.src = "https://image.thum.io/get/width/800/" + encodeURIComponent(url);
+      thumbWrap.style.display = "block";
     }
   },800);
 });
