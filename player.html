@@ -30,6 +30,44 @@ video{width:100%;border-radius:12px;background:black;}
 .ad-box{margin:25px 0;padding:20px;border-radius:12px;background:rgba(255,255,255,0.05);text-align:center;color:#aaa;}
 footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 </style>
+  <style>
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+}
+
+.video-wrapper video {
+  width: 100%;
+  border-radius: 10px;
+  background: black;
+}
+
+/* Loader overlay */
+.loader {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 40, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+.loader img {
+  width: 70px;
+}
+
+.loader p {
+  color: white;
+  font-size: 16px;
+  opacity: 0.8;
+}
+</style>
 </head>
 
 <body>
@@ -62,7 +100,23 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
     <div id="skeleton" class="skeleton">Loading 0%</div>
 
     <h2 id="videoTitle" class="video-title"></h2>
-    <video id="videoPlayer" controls preload="metadata"></video>
+    <div class="video-wrapper">
+  
+  <!-- Loader Overlay -->
+  <div id="loader" class="loader">
+    <img src="https://i.gifer.com/ZZ5H.gif" alt="loading">
+    <p>Loading video...</p>
+  </div>
+
+  <!-- Video Player -->
+  <video id="videoPlayer"
+         controls
+         preload="auto"
+         playsinline
+         webkit-playsinline>
+  </video>
+
+</div>
 
     <div class="player-actions">
       <button onclick="copyLink()">🔗 Copy Share Link</button>
@@ -228,6 +282,41 @@ function renderComments(){
   });
 }
 renderComments();
+</script>
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const video = document.getElementById("videoPlayer");
+  const loader = document.getElementById("loader");
+
+  if (!video || !loader) return;
+
+  // Jab video load hona start ho
+  video.addEventListener("loadstart", () => {
+    loader.style.display = "flex";
+  });
+
+  // Jab video play ke liye ready ho
+  video.addEventListener("canplay", () => {
+    loader.style.opacity = "0";
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 300);
+  });
+
+  // Agar buffering ho
+  video.addEventListener("waiting", () => {
+    loader.style.display = "flex";
+    loader.style.opacity = "1";
+  });
+
+  // Jab video smoothly chalne lage
+  video.addEventListener("playing", () => {
+    loader.style.opacity = "0";
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 300);
+  });
+});
 </script>
 
 </body>
