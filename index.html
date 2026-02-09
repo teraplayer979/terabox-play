@@ -322,43 +322,40 @@ const thumbWrap=document.getElementById("thumbWrap");
 
 let thumbTimeout;
 
-input.addEventListener("input",()=>{
-  clearTimeout(thumbTimeout);
-  const url=input.value.trim();
+input.addEventListener("change", fetchThumbnail);
+input.addEventListener("paste", fetchThumbnail);
 
-  if(!url.includes("http")){
-    thumbWrap.style.display="none";
-    return;
-  }
+async function fetchThumbnail(){
+  const url = input.value.trim();
+  if(!url.includes("http")) return;
 
-  thumbTimeout=setTimeout(async()=>{
-    try{
-      /* === Try API thumbnail first === */
-      const res=await fetch("https://github-backend00.onrender.com/api",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({url:url})
-      });
+  try{
+    const res = await fetch("https://github-backend00.onrender.com/api",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({url:url})
+    });
 
-      const data=await res.json();
+    const data = await res.json();
 
-      if(data && data.list && data.list[0]){
-        const file = data.list[0];
+    if(data?.list?.[0]){
+      const file = data.list[0];
+      const thumbUrl =
+        file.thumb ||
+        file.thumbnail ||
+        file.image ||
+        file.poster ||
+        file.cover;
 
-        const thumbUrl =
-          file.thumb ||
-          file.thumbnail ||
-          file.image ||
-          file.poster ||
-          file.cover ||
-          file.pic;
-
-        if(thumbUrl){
-          thumb.src = thumbUrl;
-          thumbWrap.style.display = "block";
-          return;
-        }
+      if(thumbUrl){
+        thumb.src = thumbUrl;
+        thumbWrap.style.display = "block";
       }
+    }
+  }catch(e){
+    thumbWrap.style.display="none";
+  }
+}
 
       /* === Fallback screenshot if API fails === */
       thumb.src = "https://image.thum.io/get/width/800/" + encodeURIComponent(url);
@@ -369,7 +366,7 @@ input.addEventListener("input",()=>{
       thumb.src = "https://image.thum.io/get/width/800/" + encodeURIComponent(url);
       thumbWrap.style.display = "block";
     }
-  },800);
+  
 });
 function shareTG(){
   let url=document.getElementById("url").value;
