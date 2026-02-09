@@ -19,77 +19,14 @@
     <loc>https://teraboxplay.xyz/terabox-video-player.html</loc>
     <lastmod>2026-02-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://teraboxplay.xyz/terabox-downloader.html</loc>
     <lastmod>2026-02-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/watch-terabox-online.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/watch-terabox-without-app.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/is-terabox-safe.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/fix-terabox-slow-speed.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/about.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/contact.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/privacy.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/terms.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-
-  <url>
-    <loc>https://teraboxplay.xyz/faq.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
   </url>
 
 </urlset>
