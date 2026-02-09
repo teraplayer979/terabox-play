@@ -91,7 +91,6 @@ const teraboxLink=getParam("url");
 const player=document.getElementById("videoPlayer");
 const skeleton=document.getElementById("skeleton");
 const titleBox=document.getElementById("videoTitle");
-const thumbnail=document.getElementById("thumbnail");
 
 /* auto title */
 if(teraboxLink && titleBox){
@@ -143,21 +142,9 @@ async function loadVideo(){
   const data=await fetchStream();
   if(!data || !data.list || !data.list[0]) return;
 
-  clearInterval(fakeInterval); // stop fake loader
+  clearInterval(fakeInterval);
 
   const file=data.list[0];
-
-  /* === API THUMBNAIL === */
-  const thumbUrl =
-    file.thumb ||
-    file.thumbnail ||
-    file.image ||
-    file.poster;
-
-  if(thumbUrl && thumbnail){
-    thumbnail.src = thumbUrl;
-    thumbnail.style.display = "block";
-  }
 
   const stream =
     file.fast_stream_url?.["720p"] ||
