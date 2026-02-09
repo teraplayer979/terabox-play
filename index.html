@@ -10,211 +10,173 @@
 <link rel="canonical" href="https://teraboxplay.xyz/" />
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+
+body{
+  background:radial-gradient(circle at top,#0f1b3d,#050814);
+  color:white;
+  overflow-x:hidden;
 }
 
-body {
-  background: radial-gradient(circle at top, #0f1b3d, #050814);
-  color: white;
-  overflow-x: hidden;
+.header{
+  width:100%;
+  padding:18px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(10,15,35,0.6);
+  backdrop-filter:blur(12px);
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
-/* Header */
-.header {
-  width: 100%;
-  padding: 18px 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(10,15,35,0.6);
-  backdrop-filter: blur(12px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+.logo{
+  font-size:22px;
+  font-weight:bold;
+  background:linear-gradient(90deg,#4da3ff,#9b5cff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #4da3ff, #9b5cff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.nav a{
+  color:#cbd5ff;
+  margin-left:20px;
+  text-decoration:none;
+  font-size:14px;
 }
 
-.nav a {
-  color: #cbd5ff;
-  margin-left: 20px;
-  text-decoration: none;
-  font-size: 14px;
-  transition: 0.3s;
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:60px 20px;
+  text-align:center;
 }
 
-.nav a:hover {
-  color: white;
+h1{
+  font-size:42px;
+  margin-bottom:15px;
+  background:linear-gradient(90deg,#4da3ff,#9b5cff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-/* Background glow */
-body::before {
-  content: "";
-  position: fixed;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(100,120,255,0.2), transparent);
-  top: -200px;
-  left: -200px;
-  animation: float 12s infinite alternate ease-in-out;
-  z-index: -1;
+.subtext{
+  color:#cbd5ff;
+  margin-bottom:40px;
 }
 
-@keyframes float {
-  from { transform: translate(0,0); }
-  to { transform: translate(200px,200px); }
+.card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 0 40px rgba(0,0,0,0.6);
 }
 
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 60px 20px;
-  text-align: center;
+input{
+  width:85%;
+  padding:16px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+  margin-bottom:20px;
 }
 
-h1 {
-  font-size: 42px;
-  margin-bottom: 15px;
-  background: linear-gradient(90deg, #4da3ff, #9b5cff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
 }
 
-.subtext {
-  color: #cbd5ff;
-  margin-bottom: 40px;
+button{
+  padding:14px 30px;
+  font-size:16px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
 }
 
-/* Glass card */
-.card {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+.play{background:linear-gradient(90deg,#3a7cff,#6b4dff);color:white;}
+.download{background:linear-gradient(90deg,#ff7a18,#ff3d3d);color:white;}
+.telegram-btn{background:linear-gradient(90deg,#0088cc,#00aaff);color:white;}
+
+.thumb-wrap{
+  position:relative;
+  display:none;
+  margin-bottom:15px;
 }
 
-input {
-  width: 85%;
-  padding: 16px;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-  margin-bottom: 20px;
-  outline: none;
+.thumbnail{
+  width:100%;
+  border-radius:12px;
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+.thumb-label{
+  position:absolute;
+  top:10px;
+  left:10px;
+  background:rgba(0,0,0,0.7);
+  padding:4px 10px;
+  border-radius:6px;
+  font-size:12px;
+  color:white;
 }
 
-button {
-  padding: 14px 30px;
-  font-size: 16px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+.ad-box{
+  margin:25px 0;
+  padding:20px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  text-align:center;
+  font-size:14px;
+  color:#aaa;
 }
 
-.play {
-  background: linear-gradient(90deg, #3a7cff, #6b4dff);
-  color: white;
+.popular{
+  margin-top:70px;
 }
 
-.download {
-  background: linear-gradient(90deg, #ff7a18, #ff3d3d);
-  color: white;
+.popular-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 
-/* Thumbnail */
-.thumb-wrap {
-  position: relative;
-  display: none;
-  margin-bottom: 15px;
+.popular-card{
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:14px;
+  text-decoration:none;
+  color:white;
 }
 
-.thumbnail {
-  width: 100%;
-  border-radius: 12px;
+/* SEO Sections */
+.section{
+  margin-top:60px;
+  text-align:left;
 }
 
-.thumb-label {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0,0,0,0.7);
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  color: white;
+.section h2{
+  font-size:28px;
+  margin-bottom:15px;
 }
 
-.telegram-btn {
-  background: linear-gradient(90deg, #0088cc, #00aaff);
-  color: white;
+.section p{
+  color:#cbd5ff;
+  line-height:1.7;
+  margin-bottom:15px;
 }
 
-.ad-box {
-  margin: 25px 0;
-  padding: 20px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.05);
-  text-align: center;
-  font-size: 14px;
-  color: #aaa;
+.section ul li{
+  margin-bottom:10px;
 }
 
-/* Popular pages */
-.popular {
-  margin-top: 70px;
-}
-
-.popular h2 {
-  margin-bottom: 25px;
-}
-
-.popular-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-  gap: 20px;
-}
-
-.popular-card {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 14px;
-  text-decoration: none;
-  color: white;
-  transition: 0.3s;
-}
-
-.popular-card:hover {
-  transform: translateY(-5px);
-}
-
-footer {
-  margin-top: 70px;
-  padding: 20px;
-  color: #aaa;
-  font-size: 14px;
-}
-
-footer a {
-  color: #a78bfa;
-  text-decoration: none;
-  margin: 0 6px;
+footer{
+  margin-top:70px;
+  padding:20px;
+  color:#aaa;
+  font-size:14px;
 }
 </style>
 </head>
@@ -245,7 +207,6 @@ footer a {
   <div class="card">
     <input id="url" placeholder="Paste your TeraBox link here..." />
 
-    <!-- Thumbnail -->
     <div class="thumb-wrap" id="thumbWrap">
       <span class="thumb-label">Screenshot</span>
       <img id="thumb" class="thumbnail" />
@@ -262,17 +223,70 @@ footer a {
   <div class="popular">
     <h2>Popular Pages</h2>
     <div class="popular-grid">
-      <a class="popular-card" href="/terabox-video-player.html">
-        ▶ TeraBox Video Player
-      </a>
-      <a class="popular-card" href="/terabox-downloader.html">
-        ⬇ TeraBox Downloader
-      </a>
-      <a class="popular-card" href="/watch-terabox-online.html">
-        🎬 Watch Online
-      </a>
+      <a class="popular-card" href="/terabox-video-player.html">▶ TeraBox Video Player</a>
+      <a class="popular-card" href="/terabox-downloader.html">⬇ TeraBox Downloader</a>
+      <a class="popular-card" href="/watch-terabox-online.html">🎬 Watch Online</a>
     </div>
   </div>
+
+  <!-- SEO CONTENT START -->
+  <div class="section">
+    <h2>Watch TeraBox Videos Online Without App</h2>
+    <p>
+      Our TeraBox video player allows you to watch TeraBox videos directly
+      in your browser without installing any application. Many users find
+      it frustrating when they are forced to download apps just to watch a
+      simple video. This tool removes that extra step.
+    </p>
+    <p>
+      Simply paste your TeraBox link into the input box, click play, and
+      your video will start streaming instantly. The player works on all
+      modern devices including Android phones, iPhones, tablets, laptops,
+      and desktop computers.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Why Use This TeraBox Video Player?</h2>
+    <ul>
+      <li>✔ No login or registration required</li>
+      <li>✔ Works on all devices</li>
+      <li>✔ Fast HD video streaming</li>
+      <li>✔ No software installation needed</li>
+      <li>✔ Safe and private playback</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>How to Play TeraBox Videos</h2>
+    <p><strong>Step 1:</strong> Copy your TeraBox video link.</p>
+    <p><strong>Step 2:</strong> Paste the link in the box above.</p>
+    <p><strong>Step 3:</strong> Click the play button and start watching.</p>
+  </div>
+
+  <div class="section">
+    <h2>Works on All Devices</h2>
+    <p>
+      The TeraBox video player is fully responsive and optimized for all
+      screen sizes. Whether you are using a smartphone, tablet, or desktop,
+      the player automatically adjusts for the best viewing experience.
+    </p>
+    <ul>
+      <li>📱 Android and iOS phones</li>
+      <li>💻 Laptops and desktops</li>
+      <li>📺 Smart TVs</li>
+      <li>📟 Tablets and iPads</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Frequently Asked Questions</h2>
+    <p><strong>Is this player free?</strong><br>Yes, it is completely free.</p>
+    <p><strong>Do I need to install any app?</strong><br>No, everything works in your browser.</p>
+    <p><strong>Is it safe?</strong><br>Yes, we don’t store your videos.</p>
+    <p><strong>Can I download videos?</strong><br>Yes, use the download button.</p>
+  </div>
+  <!-- SEO CONTENT END -->
 
   <footer>
     © 2026 teraboxplay.xyz – All rights reserved<br><br>
@@ -284,65 +298,61 @@ footer a {
 </div>
 
 <script>
-function play() {
-  let url = document.getElementById("url").value;
+function play(){
+  let url=document.getElementById("url").value;
   if(!url) return alert("Paste link first");
-  window.location.href = "/player.html?url=" + encodeURIComponent(url);
+  window.location.href="/player.html?url="+encodeURIComponent(url);
 }
 
-function download() {
-  let url = document.getElementById("url").value;
+function download(){
+  let url=document.getElementById("url").value;
   if(!url) return alert("Paste link first");
-  window.location.href = "/player.html?download=1&url=" + encodeURIComponent(url);
+  window.location.href="/player.html?download=1&url="+encodeURIComponent(url);
 }
 
-/* Real thumbnail preview from API */
-const input = document.getElementById("url");
-const thumb = document.getElementById("thumb");
-const thumbWrap = document.getElementById("thumbWrap");
+const input=document.getElementById("url");
+const thumb=document.getElementById("thumb");
+const thumbWrap=document.getElementById("thumbWrap");
 
 let thumbTimeout;
 
-input.addEventListener("input", () => {
+input.addEventListener("input",()=>{
   clearTimeout(thumbTimeout);
+  const url=input.value.trim();
 
-  const url = input.value.trim();
-  if (!url.includes("http")) {
-    thumbWrap.style.display = "none";
+  if(!url.includes("http")){
+    thumbWrap.style.display="none";
     return;
   }
 
-  thumbTimeout = setTimeout(async () => {
-    try {
-      const res = await fetch("https://github-backend00.onrender.com/api", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ url })
+  thumbTimeout=setTimeout(async()=>{
+    try{
+      const res=await fetch("https://github-backend00.onrender.com/api",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({url})
       });
 
-      const data = await res.json();
+      const data=await res.json();
 
-      if (data && data.list && data.list[0] && data.list[0].thumb) {
-        thumb.src = data.list[0].thumb;
-        thumbWrap.style.display = "block";
-      } else {
-        thumbWrap.style.display = "none";
+      if(data && data.list && data.list[0] && data.list[0].thumb){
+        thumb.src=data.list[0].thumb;
+        thumbWrap.style.display="block";
+      }else{
+        thumbWrap.style.display="none";
       }
 
-    } catch (e) {
-      thumbWrap.style.display = "none";
+    }catch{
+      thumbWrap.style.display="none";
     }
-  }, 800);
+  },800);
 });
 
-/* Telegram share */
-function shareTG() {
-  let url = document.getElementById("url").value;
+function shareTG(){
+  let url=document.getElementById("url").value;
   if(!url) return alert("Paste link first");
-  const share = "https://t.me/share/url?url=" + encodeURIComponent(url);
-  window.open(share, "_blank");
+  const share="https://t.me/share/url?url="+encodeURIComponent(url);
+  window.open(share,"_blank");
 }
 </script>
 
