@@ -32,49 +32,75 @@ if (cached && (now - cached.time < CACHE_TIME)) {
 }
 </script>
 
-<title>TeraBox Player</title>
+<title>TeraBox Player – Watch Online</title>
+
+<link rel="preconnect" href="https://github-backend00.onrender.com">
+<link rel="dns-prefetch" href="https://github-backend00.onrender.com">
+<link rel="preconnect" href="https://d.terabox.com">
+<link rel="dns-prefetch" href="https://d.terabox.com">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-body{background:#050814;color:white;}
-.header{padding:18px 30px;display:flex;justify-content:space-between;background:#0f1b3d;}
-.logo{font-size:22px;font-weight:bold;color:#4da3ff;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:radial-gradient(circle at top,#0f1b3d,#050814);color:white;}
+.header{width:100%;padding:18px 30px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,15,35,0.6);backdrop-filter:blur(12px);}
+.logo{font-size:22px;font-weight:bold;background:linear-gradient(90deg,#4da3ff,#9b5cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav a{color:#cbd5ff;margin-left:20px;text-decoration:none;}
 .container{max-width:1000px;margin:auto;padding:40px 20px;}
-.player-card{background:rgba(255,255,255,0.05);border-radius:18px;padding:20px;}
+.player-card{background:rgba(255,255,255,0.05);border-radius:18px;padding:20px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(0,0,0,0.6);}
 video{width:100%;border-radius:12px;background:black;}
-
+.video-title{text-align:center;margin:15px 0;font-size:22px;}
 .player-actions{text-align:center;margin-top:15px;}
-.player-actions button{margin:5px;padding:10px 16px;border:none;border-radius:8px;cursor:pointer;}
+.player-actions button{margin:5px;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;}
+.telegram-btn{background:linear-gradient(90deg,#0088cc,#00aaff);color:white;}
+.focus-mode{background:black!important;}
+.history{margin-top:40px;}
+.history a{display:block;color:#a78bfa;margin:6px 0;text-decoration:none;}
+.comments{margin-top:50px;text-align:left;}
+.comment-box{width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;}
+.comment{background:rgba(255,255,255,0.05);padding:10px;margin-top:10px;border-radius:8px;}
+.ad-box{margin:25px 0;padding:20px;border-radius:12px;background:rgba(255,255,255,0.05);text-align:center;color:#aaa;}
+footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
 .notice-box{
-  background:linear-gradient(90deg,#4da3ff,#9b5cff);
-  padding:12px;
+  background: linear-gradient(90deg,#4da3ff,#9b5cff);
+  padding:12px 16px;
   border-radius:10px;
   text-align:center;
+  font-size:15px;
   margin-bottom:15px;
+  font-weight:600;
+}
+
+.video-wrapper{
+  position:relative;
 }
 
 .quality-menu{
   position:absolute;
-  bottom:15px;
+  top:15px;
   right:15px;
+  z-index:10;
 }
 
 #qualityBtn{
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.75);
   color:white;
   border:none;
-  padding:6px 10px;
-  border-radius:6px;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:600;
 }
 
 .quality-options{
   display:none;
   position:absolute;
-  bottom:40px;
+  top:45px;
   right:0;
-  background:#111;
+  background:rgba(0,0,0,0.85);
   border-radius:8px;
+  overflow:hidden;
 }
 
 .quality-options div{
@@ -82,23 +108,22 @@ video{width:100%;border-radius:12px;background:black;}
   cursor:pointer;
 }
 
-.ad-box{margin:25px 0;text-align:center;}
-.comment{background:#111;padding:10px;margin-top:10px;border-radius:8px;}
-.comment-box{width:100%;padding:10px;margin-top:10px;border-radius:8px;border:none;}
+.quality-options div:hover{
+  background:rgba(255,255,255,0.1);
+}
 </style>
 </head>
 
 <body>
 
 <header class="header">
-  <div class="logo">TeraBoxPlay</div>
+<div class="logo">TeraBoxPlay</div>
+<nav class="nav">
+<a href="/">Home</a>
+</nav>
 </header>
 
 <div class="container">
-
-<div class="ad-box">
-<script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
-</div>
 
 <div class="player-card">
 
@@ -106,9 +131,10 @@ video{width:100%;border-radius:12px;background:black;}
 ⏳ 5–6 seconds wait karein… video automatically start ho jayegi.
 </div>
 
-<h2 id="videoTitle"></h2>
+<h2 id="videoTitle" class="video-title"></h2>
 
-<div style="position:relative;">
+<div class="video-wrapper">
+
 <video id="videoPlayer" controls preload="auto" playsinline muted></video>
 
 <div class="quality-menu">
@@ -119,39 +145,52 @@ video{width:100%;border-radius:12px;background:black;}
 <div data-q="720p">720p HD</div>
 </div>
 </div>
+
 </div>
 
 <div class="player-actions">
-<button onclick="copyLink()">🔗 Copy Link</button>
-<button onclick="toggleFocus()">🌙 Focus</button>
-<button onclick="shareTelegram()">📤 Telegram</button>
+<button onclick="copyLink()">🔗 Copy Share Link</button>
+<button onclick="toggleFocus()">🌙 Focus Mode</button>
+<button class="telegram-btn" onclick="shareTelegram()">📤 Share Telegram</button>
 </div>
 
 </div>
 
-<div class="comments">
-<h3>Comments</h3>
-<input id="commentInput" class="comment-box" placeholder="Write comment..." />
-<button onclick="addComment()">Post</button>
-<div id="commentList"></div>
 </div>
 
-</div>
+<footer>
+© 2026 teraboxplay.xyz
+</footer>
 
 <script>
-const player = document.getElementById("videoPlayer");
-const titleBox = document.getElementById("videoTitle");
-let streams = {};
+function getParam(name){
+  return new URL(window.location.href).searchParams.get(name);
+}
+
+const teraboxLink=getParam("url");
+const downloadMode=getParam("download");
+const player=document.getElementById("videoPlayer");
+const titleBox=document.getElementById("videoTitle");
+
+let streams={};
+
+if(teraboxLink && titleBox){
+  try{
+    const name=decodeURIComponent(teraboxLink.split("/").pop());
+    titleBox.innerText=name.substring(0,60);
+  }catch{
+    titleBox.innerText="TeraBox Video";
+  }
+}
 
 async function loadVideo(){
-  const url = new URL(location.href).searchParams.get("url");
-  if(!url) return;
+  if(!teraboxLink) return;
 
   const data = await window.videoPromise;
   if(!data || !data.list || !data.list[0]) return;
 
-  const file = data.list[0];
-  streams = file.fast_stream_url || {};
+  const file=data.list[0];
+  streams=file.fast_stream_url || {};
 
   const stream =
     streams["360p"] ||
@@ -159,74 +198,57 @@ async function loadVideo(){
     streams["720p"] ||
     file.stream_url;
 
+  if(!stream) return;
+
   player.src = stream;
   player.muted = true;
   player.play().catch(()=>{});
-
-  setupQuality();
 }
 
-function setupQuality(){
-  const btn = document.getElementById("qualityBtn");
-  const menu = document.getElementById("qualityOptions");
+loadVideo();
 
-  btn.onclick = ()=>{
-    menu.style.display = menu.style.display==="block"?"none":"block";
+const btn=document.getElementById("qualityBtn");
+const menu=document.getElementById("qualityOptions");
+
+btn.onclick=()=>{
+  menu.style.display = menu.style.display==="block"?"none":"block";
+};
+
+menu.querySelectorAll("div").forEach(opt=>{
+  opt.onclick=()=>{
+    const q=opt.dataset.q;
+    const time=player.currentTime;
+
+    const newStream=
+      streams[q] ||
+      streams["360p"] ||
+      streams["480p"] ||
+      streams["720p"];
+
+    if(newStream){
+      player.src=newStream;
+      player.currentTime=time;
+      player.play();
+      btn.textContent=q+" ⚙️";
+    }
+
+    menu.style.display="none";
   };
-
-  menu.querySelectorAll("div").forEach(opt=>{
-    opt.onclick=()=>{
-      const q = opt.dataset.q;
-      const time = player.currentTime;
-
-      const newStream = streams[q];
-      if(newStream){
-        player.src = newStream;
-        player.currentTime = time;
-        player.play();
-        btn.textContent = q+" ⚙️";
-      }
-
-      menu.style.display="none";
-    };
-  });
-}
+});
 
 function copyLink(){
-  navigator.clipboard.writeText(location.href);
+  navigator.clipboard.writeText(window.location.href);
   alert("Link copied");
 }
 
 function shareTelegram(){
-  window.open("https://t.me/share/url?url="+encodeURIComponent(location.href));
+  const share="https://t.me/share/url?url="+encodeURIComponent(window.location.href);
+  window.open(share,"_blank");
 }
 
 function toggleFocus(){
-  document.body.style.background = "black";
+  document.body.classList.toggle("focus-mode");
 }
-
-function addComment(){
-  const input = document.getElementById("commentInput");
-  if(!input.value) return;
-
-  let comments = JSON.parse(localStorage.getItem("comments")||"[]");
-  comments.unshift(input.value);
-  localStorage.setItem("comments",JSON.stringify(comments));
-  renderComments();
-  input.value="";
-}
-
-function renderComments(){
-  const list=document.getElementById("commentList");
-  let comments=JSON.parse(localStorage.getItem("comments")||"[]");
-  list.innerHTML="";
-  comments.forEach(c=>{
-    list.innerHTML+=`<div class="comment">${c}</div>`;
-  });
-}
-
-renderComments();
-loadVideo();
 </script>
 
 <script src="https://pl28686494.effectivegatecpm.com/2b/ad/f6/2badf611f381efeb9eb9dc119e4532b2.js"></script>
