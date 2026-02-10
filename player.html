@@ -69,25 +69,28 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
   margin: auto;
 }
 
-.video-wrapper video {
+.video-wrapper {
+  position: relative;
   width: 100%;
-  border-radius: 10px;
-  background: black;
+  max-width: 900px;
+  margin: auto;
+  overflow: hidden;     /* IMPORTANT */
+  border-radius: 10px;  /* same as video */
 }
 
 .loader {
   position: absolute;
   inset: 0;
-  background: rgba(10, 15, 40, 0.9);
+  background: rgba(0,0,0,0.45); /* lighter transparent bg */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 15px;
-  z-index: 10;
+  z-index: 5;
   transition: opacity 0.3s ease;
+  border-radius: 10px;
 }
-
 .loader img {
   width: 70px;
 }
