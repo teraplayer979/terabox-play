@@ -1,20 +1,21 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<script>
+ <script>
 const VIDEO_URL = new URL(location.href).searchParams.get("url");
 const CACHE_KEY = "stream_" + VIDEO_URL;
-const CACHE_TIME = 60 * 60 * 1000;
+const CACHE_TIME = 60 * 60 * 1000; // 1 hour
 
 const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
 const now = Date.now();
 
 if (cached && (now - cached.time < CACHE_TIME)) {
+  // Use cached link
   window.videoPromise = Promise.resolve(cached.data);
 } else {
+  // Fetch new stream
   window.videoPromise = fetch("https://github-backend00.onrender.com/api",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
@@ -33,9 +34,11 @@ if (cached && (now - cached.time < CACHE_TIME)) {
 </script>
 
 <title>TeraBox Player – Watch Online</title>
-
-<link rel="preconnect" href="https://github-backend00.onrender.com">
+  <link rel="preconnect" href="https://github-backend00.onrender.com">
 <link rel="dns-prefetch" href="https://github-backend00.onrender.com">
+ 
+<link rel="preconnect" href="https://d.terabox.com">
+<link rel="dns-prefetch" href="https://d.terabox.com"> 
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
@@ -50,39 +53,41 @@ video{width:100%;border-radius:12px;background:black;}
 .player-actions{text-align:center;margin-top:15px;}
 .player-actions button{margin:5px;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;}
 .telegram-btn{background:linear-gradient(90deg,#0088cc,#00aaff);color:white;}
+.focus-mode{background:black!important;}
+.history{margin-top:40px;}
+.history a{display:block;color:#a78bfa;margin:6px 0;text-decoration:none;}
+.comments{margin-top:50px;text-align:left;}
+.comment-box{width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;}
+.comment{background:rgba(255,255,255,0.05);padding:10px;margin-top:10px;border-radius:8px;}
 .ad-box{margin:25px 0;padding:20px;border-radius:12px;background:rgba(255,255,255,0.05);text-align:center;color:#aaa;}
 footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
-/* loader */
-.video-wrapper{
-  position:relative;
-  width:100%;
-  max-width:900px;
-  margin:auto;
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
 }
 
-.loader{
-  position:absolute;
-  inset:0;
-  background:rgba(10,15,40,0.95);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:5;
-  border-radius:12px;
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  overflow: hidden;     /* IMPORTANT */
+  border-radius: 10px;  /* same as video */
 }
 
-.loader img {
-  width: 140px;      /* double size */
-  max-width: 60%;    /* responsive on mobile */
-  height: auto;
-}
-}
-.loader p{
-  margin-top:10px;
-  font-size:14px;
-  opacity:.8;
+
+ .notice-box{
+  background: linear-gradient(90deg,#4da3ff,#9b5cff);
+  padding:12px 16px;
+  border-radius:10px;
+  text-align:center;
+  font-size:15px;
+  margin-bottom:15px;
+  font-weight:600;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 </style>
 </head>
@@ -98,40 +103,91 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
 <div class="container">
 
-<div class="ad-box">Ad space</div>
-
-<div class="player-card">
-
-<h2 id="videoTitle" class="video-title"></h2>
-
-<div class="video-wrapper">
-
-  <!-- CARTOON LOADER -->
-  <div id="loader" class="loader">
-    <img src="anime-loader.png" alt="loading">
-    <p>Video loading… please wait</p>
+  <!-- TOP AD -->
+  <div class="ad-box">
+    <script>
+      atOptions = {
+        'key' : '07f225439358aa450e7cfdd702a47568',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    </script>
+    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
   </div>
 
-  <video id="videoPlayer"
-    controls
-    preload="metadata"
-    playsinline
-    muted>
-  </video>
+  <div class="player-card">
 
-</div>
+    <div class="notice-box">
+    ⏳ 5–6 seconds wait karein… video automatically start ho jayegi.
+    </div>
 
-<div class="player-actions">
-  <button onclick="copyLink()">🔗 Copy Share Link</button>
-  <button class="telegram-btn" onclick="shareTelegram()">📤 Share Telegram</button>
-</div>
+    <h2 id="videoTitle" class="video-title"></h2>
+  
+      
 
-</div>
+      <!-- Video Player -->
+      <video id="videoPlayer"
+       controls
+       preload="auto"
+       playsinline
+       webkit-playsinline
+       muted>
+</video>
+
+    </div>
+
+    <div class="player-actions">
+      <button onclick="copyLink()">🔗 Copy Share Link</button>
+      <button onclick="toggleFocus()">🌙 Focus Mode</button>
+      <button class="telegram-btn" onclick="shareTelegram()">📤 Share Telegram</button>
+      <button id="installBtn" style="display:none;">📲 Install App</button>
+    </div>
+
+  </div>
+
+  <!-- MIDDLE AD -->
+  <div class="ad-box">
+    <script>
+      atOptions = {
+        'key' : '07f225439358aa450e7cfdd702a47568',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
+  </div>
+
+  <div class="history" id="historyBox"></div>
+
+  <div class="comments">
+    <h3>Comments</h3>
+    <input id="commentInput" class="comment-box" placeholder="Write a comment..." />
+    <button onclick="addComment()">Post</button>
+    <div id="commentList"></div>
+  </div>
+
+  <!-- BOTTOM AD -->
+  <div class="ad-box">
+    <script>
+      atOptions = {
+        'key' : '07f225439358aa450e7cfdd702a47568',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
+  </div>
 
 </div>
 
 <footer>
-© 2026 teraboxplay.xyz
+  © 2026 teraboxplay.xyz
 </footer>
 
 <script>
@@ -143,7 +199,6 @@ function getParam(name){
 const teraboxLink=getParam("url");
 const downloadMode=getParam("download");
 const player=document.getElementById("videoPlayer");
-const loader=document.getElementById("loader");
 const titleBox=document.getElementById("videoTitle");
 
 if(teraboxLink && titleBox){
@@ -178,14 +233,20 @@ async function loadVideo(){
 
   player.src = stream;
 
+  // instant warm-up play
   player.muted = true;
   player.play().catch(()=>{});
 }
 
 loadVideo();
-
-player.addEventListener("playing",()=>{
-  loader.style.display="none";
+player.addEventListener("loadedmetadata",()=>{
+  const key="time_"+player.src;
+  const saved=localStorage.getItem(key);
+  if(saved) player.currentTime=saved;
+});
+player.addEventListener("timeupdate",()=>{
+  const key="time_"+player.src;
+  localStorage.setItem(key,player.currentTime);
 });
 
 function copyLink(){
@@ -197,10 +258,53 @@ function shareTelegram(){
   const share="https://t.me/share/url?url="+encodeURIComponent(window.location.href);
   window.open(share,"_blank");
 }
+
+function toggleFocus(){
+  document.body.classList.toggle("focus-mode");
+}
+
+function addComment(){
+  const input=document.getElementById("commentInput");
+  if(!input.value) return;
+  let comments=JSON.parse(localStorage.getItem("comments")||"[]");
+  comments.unshift(input.value);
+  localStorage.setItem("comments",JSON.stringify(comments));
+  renderComments();
+  input.value="";
+}
+function renderComments(){
+  const list=document.getElementById("commentList");
+  let comments=JSON.parse(localStorage.getItem("comments")||"[]");
+  list.innerHTML="";
+  comments.forEach(c=>{
+    list.innerHTML+=`<div class="comment">${c}</div>`;
+  });
+}
+renderComments();
 </script>
 
-<!-- POPUNDER -->
-<script src="https://pl28686494.effectivegatecpm.com/2b/ad/f6/2badf611f381efeb9eb9dc119e4532b2.js"></script>
+<script>
+
+  video.addEventListener("loadeddata", () => {
+    loader.style.opacity = "0";
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 300);
+  });
+
+  video.addEventListener("waiting", () => {
+    loader.style.display = "flex";
+    loader.style.opacity = "1";
+  });
+
+  video.addEventListener("playing", () => {
+    loader.style.opacity = "0";
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 300);
+  });
+});
+</script>
 
 </body>
 </html>
