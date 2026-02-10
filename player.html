@@ -247,9 +247,15 @@ async function loadVideo(){
 
   if(!stream) return;
 
-  player.src = stream;
-  player.muted = true;
-  player.play().catch(()=>{});
+player.src = stream;
+player.muted = true;
+
+player.addEventListener("loadeddata", ()=>{
+  const loader = document.getElementById("loader");
+  if(loader) loader.style.display = "none";
+});
+
+player.play().catch(()=>{});
 }
 
 loadVideo();
