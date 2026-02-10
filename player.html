@@ -36,8 +36,6 @@ if (cached && (now - cached.time < CACHE_TIME)) {
 
 <link rel="preconnect" href="https://github-backend00.onrender.com">
 <link rel="dns-prefetch" href="https://github-backend00.onrender.com">
-<link rel="preconnect" href="https://d.terabox.com">
-<link rel="dns-prefetch" href="https://d.terabox.com">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
@@ -52,27 +50,13 @@ video{width:100%;border-radius:12px;background:black;}
 .player-actions{text-align:center;margin-top:15px;}
 .player-actions button{margin:5px;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;}
 .telegram-btn{background:linear-gradient(90deg,#0088cc,#00aaff);color:white;}
-.focus-mode{background:black!important;}
-.history{margin-top:40px;}
-.history a{display:block;color:#a78bfa;margin:6px 0;text-decoration:none;}
-.comments{margin-top:50px;text-align:left;}
-.comment-box{width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;}
-.comment{background:rgba(255,255,255,0.05);padding:10px;margin-top:10px;border-radius:8px;}
 .ad-box{margin:25px 0;padding:20px;border-radius:12px;background:rgba(255,255,255,0.05);text-align:center;color:#aaa;}
 footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
-.notice-box{
-  background: linear-gradient(90deg,#4da3ff,#9b5cff);
-  padding:12px 16px;
-  border-radius:10px;
-  text-align:center;
-  font-size:15px;
-  margin-bottom:15px;
-  font-weight:600;
-}
-
+/* loader */
 .video-wrapper{
   position:relative;
+  width:100%;
   max-width:900px;
   margin:auto;
 }
@@ -80,21 +64,21 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 .loader{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,0.85);
+  background:rgba(10,15,40,0.95);
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  gap:12px;
+  z-index:5;
   border-radius:12px;
-  z-index:10;
 }
 
 .loader img{
-  width:240px;
+  width:140px;
 }
 .loader p{
-  font-size:16px;
+  margin-top:10px;
+  font-size:14px;
   opacity:.8;
 }
 </style>
@@ -111,90 +95,34 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
 <div class="container">
 
-<!-- TOP AD -->
-<div class="ad-box">
-<script>
-atOptions = {
-'key' : '07f225439358aa450e7cfdd702a47568',
-'format' : 'iframe',
-'height' : 90,
-'width' : 728,
-'params' : {}
-};
-</script>
-<script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
-</div>
+<div class="ad-box">Ad space</div>
 
 <div class="player-card">
-
-<div class="notice-box">
-⏳ 5–6 seconds wait karein… video automatically start ho jayegi.
-</div>
 
 <h2 id="videoTitle" class="video-title"></h2>
 
 <div class="video-wrapper">
 
-<!-- Anime Loader -->
-<div id="loader" class="loader">
-<img src="anime-loader.png" alt="loading">
-<p>Preparing your video...</p>
-</div>
+  <!-- CARTOON LOADER -->
+  <div id="loader" class="loader">
+    <img src="anime-loader.png" alt="loading">
+    <p>Video loading… please wait</p>
+  </div>
 
-<video id="videoPlayer"
-controls
-preload="auto"
-playsinline
-webkit-playsinline
-muted>
-</video>
+  <video id="videoPlayer"
+    controls
+    preload="metadata"
+    playsinline
+    muted>
+  </video>
 
 </div>
 
 <div class="player-actions">
-<button onclick="copyLink()">🔗 Copy Share Link</button>
-<button onclick="toggleFocus()">🌙 Focus Mode</button>
-<button class="telegram-btn" onclick="shareTelegram()">📤 Share Telegram</button>
-<button id="installBtn" style="display:none;">📲 Install App</button>
+  <button onclick="copyLink()">🔗 Copy Share Link</button>
+  <button class="telegram-btn" onclick="shareTelegram()">📤 Share Telegram</button>
 </div>
 
-</div>
-
-<!-- MIDDLE AD -->
-<div class="ad-box">
-<script>
-atOptions = {
-'key' : '07f225439358aa450e7cfdd702a47568',
-'format' : 'iframe',
-'height' : 250,
-'width' : 300,
-'params' : {}
-};
-</script>
-<script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
-</div>
-
-<div class="history" id="historyBox"></div>
-
-<div class="comments">
-<h3>Comments</h3>
-<input id="commentInput" class="comment-box" placeholder="Write a comment..." />
-<button onclick="addComment()">Post</button>
-<div id="commentList"></div>
-</div>
-
-<!-- BOTTOM AD -->
-<div class="ad-box">
-<script>
-atOptions = {
-'key' : '07f225439358aa450e7cfdd702a47568',
-'format' : 'iframe',
-'height' : 250,
-'width' : 300,
-'params' : {}
-};
-</script>
-<script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
 </div>
 
 </div>
@@ -205,103 +133,70 @@ atOptions = {
 
 <script>
 function getParam(name){
-const url=new URL(window.location.href);
-return url.searchParams.get(name);
+  const url=new URL(window.location.href);
+  return url.searchParams.get(name);
 }
 
 const teraboxLink=getParam("url");
 const downloadMode=getParam("download");
 const player=document.getElementById("videoPlayer");
-const titleBox=document.getElementById("videoTitle");
 const loader=document.getElementById("loader");
+const titleBox=document.getElementById("videoTitle");
 
 if(teraboxLink && titleBox){
-try{
-const name=decodeURIComponent(teraboxLink.split("/").pop());
-titleBox.innerText=name.substring(0,60);
-}catch{
-titleBox.innerText="TeraBox Video";
-}
+  try{
+    const name=decodeURIComponent(teraboxLink.split("/").pop());
+    titleBox.innerText=name.substring(0,60);
+  }catch{
+    titleBox.innerText="TeraBox Video";
+  }
 }
 
 async function loadVideo(){
-if(!teraboxLink) return;
+  if(!teraboxLink) return;
 
-const data = await window.videoPromise;
-if(!data || !data.list || !data.list[0]) return;
+  const data = await window.videoPromise;
+  if(!data || !data.list || !data.list[0]) return;
 
-const file=data.list[0];
+  const file=data.list[0];
 
-const stream =
-file.fast_stream_url?.["360p"] ||
-file.fast_stream_url?.["480p"] ||
-file.fast_stream_url?.["720p"] ||
-file.stream_url;
+  const stream =
+    file.fast_stream_url?.["360p"] ||
+    file.fast_stream_url?.["480p"] ||
+    file.fast_stream_url?.["720p"] ||
+    file.stream_url;
 
-if(!stream) return;
+  if(!stream) return;
 
-if(downloadMode){
-window.location.href = file.download_link || stream;
-return;
-}
+  if(downloadMode){
+    window.location.href = file.download_link || stream;
+    return;
+  }
 
-player.src = stream;
-player.muted = true;
-player.play().catch(()=>{});
+  player.src = stream;
+
+  player.muted = true;
+  player.play().catch(()=>{});
 }
 
 loadVideo();
 
 player.addEventListener("playing",()=>{
-loader.style.display="none";
-});
-
-player.addEventListener("loadedmetadata",()=>{
-const key="time_"+player.src;
-const saved=localStorage.getItem(key);
-if(saved) player.currentTime=saved;
-});
-
-player.addEventListener("timeupdate",()=>{
-const key="time_"+player.src;
-localStorage.setItem(key,player.currentTime);
+  loader.style.display="none";
 });
 
 function copyLink(){
-navigator.clipboard.writeText(window.location.href);
-alert("Link copied");
+  navigator.clipboard.writeText(window.location.href);
+  alert("Link copied");
 }
 
 function shareTelegram(){
-const share="https://t.me/share/url?url="+encodeURIComponent(window.location.href);
-window.open(share,"_blank");
+  const share="https://t.me/share/url?url="+encodeURIComponent(window.location.href);
+  window.open(share,"_blank");
 }
-
-function toggleFocus(){
-document.body.classList.toggle("focus-mode");
-}
-
-function addComment(){
-const input=document.getElementById("commentInput");
-if(!input.value) return;
-let comments=JSON.parse(localStorage.getItem("comments")||"[]");
-comments.unshift(input.value);
-localStorage.setItem("comments",JSON.stringify(comments));
-renderComments();
-input.value="";
-}
-
-function renderComments(){
-const list=document.getElementById("commentList");
-let comments=JSON.parse(localStorage.getItem("comments")||"[]");
-list.innerHTML="";
-comments.forEach(c=>{
-list.innerHTML+=`<div class="comment">${c}</div>`;
-});
-}
-renderComments();
 </script>
-  <!-- Adsterra Slider Ad -->
+
+<!-- POPUNDER -->
 <script src="https://pl28686494.effectivegatecpm.com/2b/ad/f6/2badf611f381efeb9eb9dc119e4532b2.js"></script>
 
 </body>
