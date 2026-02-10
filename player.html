@@ -78,28 +78,7 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
   border-radius: 10px;  /* same as video */
 }
 
-.loader {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45); /* lighter transparent bg */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  z-index: 5;
-  transition: opacity 0.3s ease;
-  border-radius: 10px;
-}
-.loader img {
-  width: 70px;
-}
 
-.loader p {
-  color: white;
-  font-size: 16px;
-  opacity: 0.8;
-}
  .notice-box{
   background: linear-gradient(90deg,#4da3ff,#9b5cff);
   padding:12px 16px;
@@ -146,11 +125,7 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
     <h2 id="videoTitle" class="video-title"></h2>
   
-      <!-- Loader Overlay -->
-      <div id="loader" class="loader">
-        <img src="https://i.gifer.com/ZZ5H.gif" alt="loading">
-        <p>Loading video...</p>
-      </div>
+      
 
       <!-- Video Player -->
       <video id="videoPlayer"
@@ -309,15 +284,6 @@ renderComments();
 </script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const video = document.getElementById("videoPlayer");
-  const loader = document.getElementById("loader");
-
-  if (!video || !loader) return;
-
-  video.addEventListener("loadstart", () => {
-    loader.style.display = "flex";
-  });
 
   video.addEventListener("loadeddata", () => {
     loader.style.opacity = "0";
