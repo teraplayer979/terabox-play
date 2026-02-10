@@ -115,6 +115,43 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 .quality-options div:hover{
   background:rgba(255,255,255,0.1);
 }
+  .real-loader{
+  position:absolute;
+  inset:0;
+  background:black;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:20;
+}
+
+.loader-text{
+  color:white;
+  font-size:18px;
+  margin-bottom:20px;
+  opacity:0.9;
+}
+
+.loader-bar{
+  width:70%;
+  height:4px;
+  background:rgba(255,255,255,0.2);
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.loader-progress{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#4da3ff,#9b5cff);
+  animation:loaderMove 1.2s linear infinite;
+}
+
+@keyframes loaderMove{
+  0%{width:0%;}
+  100%{width:100%;}
+}
 </style>
 </head>
 
@@ -138,6 +175,12 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 <h2 id="videoTitle" class="video-title"></h2>
 
 <div class="video-wrapper">
+  <div id="realLoader" class="real-loader">
+  <div class="loader-text">Video is starting…</div>
+  <div class="loader-bar">
+    <div class="loader-progress" id="loaderProgress"></div>
+  </div>
+</div>
 
 <video id="videoPlayer" controls preload="auto" playsinline muted poster="anime-girl.png"></video>
 
@@ -253,6 +296,18 @@ function shareTelegram(){
 function toggleFocus(){
   document.body.classList.toggle("focus-mode");
 }
+</script>
+  <script>
+const loader = document.getElementById("realLoader");
+const video = document.getElementById("videoPlayer");
+
+video.addEventListener("playing", ()=>{
+  if(loader) loader.style.display="none";
+});
+
+video.addEventListener("canplay", ()=>{
+  if(loader) loader.style.display="none";
+});
 </script>
 
 <script src="https://pl28686494.effectivegatecpm.com/2b/ad/f6/2badf611f381efeb9eb9dc119e4532b2.js"></script>
