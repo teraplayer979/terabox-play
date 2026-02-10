@@ -3,19 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
- <script>
+
+<script>
 const VIDEO_URL = new URL(location.href).searchParams.get("url");
 const CACHE_KEY = "stream_" + VIDEO_URL;
-const CACHE_TIME = 60 * 60 * 1000; // 1 hour
+const CACHE_TIME = 60 * 60 * 1000;
 
 const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
 const now = Date.now();
 
 if (cached && (now - cached.time < CACHE_TIME)) {
-  // Use cached link
   window.videoPromise = Promise.resolve(cached.data);
 } else {
-  // Fetch new stream
   window.videoPromise = fetch("https://github-backend00.onrender.com/api",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
@@ -34,11 +33,11 @@ if (cached && (now - cached.time < CACHE_TIME)) {
 </script>
 
 <title>TeraBox Player – Watch Online</title>
-  <link rel="preconnect" href="https://github-backend00.onrender.com">
+
+<link rel="preconnect" href="https://github-backend00.onrender.com">
 <link rel="dns-prefetch" href="https://github-backend00.onrender.com">
- 
 <link rel="preconnect" href="https://d.terabox.com">
-<link rel="dns-prefetch" href="https://d.terabox.com"> 
+<link rel="dns-prefetch" href="https://d.terabox.com">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
@@ -62,24 +61,7 @@ video{width:100%;border-radius:12px;background:black;}
 .ad-box{margin:25px 0;padding:20px;border-radius:12px;background:rgba(255,255,255,0.05);text-align:center;color:#aaa;}
 footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
-.video-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: auto;
-}
-
-.video-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  margin: auto;
-  overflow: hidden;     /* IMPORTANT */
-  border-radius: 10px;  /* same as video */
-}
-
-
- .notice-box{
+.notice-box{
   background: linear-gradient(90deg,#4da3ff,#9b5cff);
   padding:12px 16px;
   border-radius:10px;
@@ -87,7 +69,33 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
   font-size:15px;
   margin-bottom:15px;
   font-weight:600;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+.video-wrapper{
+  position:relative;
+  max-width:900px;
+  margin:auto;
+}
+
+.loader{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  border-radius:12px;
+  z-index:10;
+}
+
+.loader img{
+  width:120px;
+}
+.loader p{
+  font-size:16px;
+  opacity:.8;
 }
 </style>
 </head>
@@ -103,207 +111,195 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
 <div class="container">
 
-  <!-- TOP AD -->
-  <div class="ad-box">
-    <script>
-      atOptions = {
-        'key' : '07f225439358aa450e7cfdd702a47568',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
-  </div>
+<!-- TOP AD -->
+<div class="ad-box">
+<script>
+atOptions = {
+'key' : '07f225439358aa450e7cfdd702a47568',
+'format' : 'iframe',
+'height' : 90,
+'width' : 728,
+'params' : {}
+};
+</script>
+<script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
+</div>
 
-  <div class="player-card">
+<div class="player-card">
 
-    <div class="notice-box">
-    ⏳ 5–6 seconds wait karein… video automatically start ho jayegi.
-    </div>
+<div class="notice-box">
+⏳ 5–6 seconds wait karein… video automatically start ho jayegi.
+</div>
 
-    <h2 id="videoTitle" class="video-title"></h2>
-  
-      
+<h2 id="videoTitle" class="video-title"></h2>
 
-      <!-- Video Player -->
-      <video id="videoPlayer"
-       controls
-       preload="auto"
-       playsinline
-       webkit-playsinline
-       muted>
+<div class="video-wrapper">
+
+<!-- Anime Loader -->
+<div id="loader" class="loader">
+<img src="anime-loader.png" alt="loading">
+<p>Preparing your video...</p>
+</div>
+
+<video id="videoPlayer"
+controls
+preload="auto"
+playsinline
+webkit-playsinline
+muted>
 </video>
 
-    </div>
+</div>
 
-    <div class="player-actions">
-      <button onclick="copyLink()">🔗 Copy Share Link</button>
-      <button onclick="toggleFocus()">🌙 Focus Mode</button>
-      <button class="telegram-btn" onclick="shareTelegram()">📤 Share Telegram</button>
-      <button id="installBtn" style="display:none;">📲 Install App</button>
-    </div>
+<div class="player-actions">
+<button onclick="copyLink()">🔗 Copy Share Link</button>
+<button onclick="toggleFocus()">🌙 Focus Mode</button>
+<button class="telegram-btn" onclick="shareTelegram()">📤 Share Telegram</button>
+<button id="installBtn" style="display:none;">📲 Install App</button>
+</div>
 
-  </div>
+</div>
 
-  <!-- MIDDLE AD -->
-  <div class="ad-box">
-    <script>
-      atOptions = {
-        'key' : '07f225439358aa450e7cfdd702a47568',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
-  </div>
+<!-- MIDDLE AD -->
+<div class="ad-box">
+<script>
+atOptions = {
+'key' : '07f225439358aa450e7cfdd702a47568',
+'format' : 'iframe',
+'height' : 250,
+'width' : 300,
+'params' : {}
+};
+</script>
+<script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
+</div>
 
-  <div class="history" id="historyBox"></div>
+<div class="history" id="historyBox"></div>
 
-  <div class="comments">
-    <h3>Comments</h3>
-    <input id="commentInput" class="comment-box" placeholder="Write a comment..." />
-    <button onclick="addComment()">Post</button>
-    <div id="commentList"></div>
-  </div>
+<div class="comments">
+<h3>Comments</h3>
+<input id="commentInput" class="comment-box" placeholder="Write a comment..." />
+<button onclick="addComment()">Post</button>
+<div id="commentList"></div>
+</div>
 
-  <!-- BOTTOM AD -->
-  <div class="ad-box">
-    <script>
-      atOptions = {
-        'key' : '07f225439358aa450e7cfdd702a47568',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-      };
-    </script>
-    <script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
-  </div>
+<!-- BOTTOM AD -->
+<div class="ad-box">
+<script>
+atOptions = {
+'key' : '07f225439358aa450e7cfdd702a47568',
+'format' : 'iframe',
+'height' : 250,
+'width' : 300,
+'params' : {}
+};
+</script>
+<script src="//www.highperformanceformat.com/07f225439358aa450e7cfdd702a47568/invoke.js"></script>
+</div>
 
 </div>
 
 <footer>
-  © 2026 teraboxplay.xyz
+© 2026 teraboxplay.xyz
 </footer>
 
 <script>
 function getParam(name){
-  const url=new URL(window.location.href);
-  return url.searchParams.get(name);
+const url=new URL(window.location.href);
+return url.searchParams.get(name);
 }
 
 const teraboxLink=getParam("url");
 const downloadMode=getParam("download");
 const player=document.getElementById("videoPlayer");
 const titleBox=document.getElementById("videoTitle");
+const loader=document.getElementById("loader");
 
 if(teraboxLink && titleBox){
-  try{
-    const name=decodeURIComponent(teraboxLink.split("/").pop());
-    titleBox.innerText=name.substring(0,60);
-  }catch{
-    titleBox.innerText="TeraBox Video";
-  }
+try{
+const name=decodeURIComponent(teraboxLink.split("/").pop());
+titleBox.innerText=name.substring(0,60);
+}catch{
+titleBox.innerText="TeraBox Video";
+}
 }
 
 async function loadVideo(){
-  if(!teraboxLink) return;
+if(!teraboxLink) return;
 
-  const data = await window.videoPromise;
-  if(!data || !data.list || !data.list[0]) return;
+const data = await window.videoPromise;
+if(!data || !data.list || !data.list[0]) return;
 
-  const file=data.list[0];
+const file=data.list[0];
 
-  const stream =
-    file.fast_stream_url?.["360p"] ||
-    file.fast_stream_url?.["480p"] ||
-    file.fast_stream_url?.["720p"] ||
-    file.stream_url;
+const stream =
+file.fast_stream_url?.["360p"] ||
+file.fast_stream_url?.["480p"] ||
+file.fast_stream_url?.["720p"] ||
+file.stream_url;
 
-  if(!stream) return;
+if(!stream) return;
 
-  if(downloadMode){
-    window.location.href = file.download_link || stream;
-    return;
-  }
+if(downloadMode){
+window.location.href = file.download_link || stream;
+return;
+}
 
-  player.src = stream;
-
-  // instant warm-up play
-  player.muted = true;
-  player.play().catch(()=>{});
+player.src = stream;
+player.muted = true;
+player.play().catch(()=>{});
 }
 
 loadVideo();
-player.addEventListener("loadedmetadata",()=>{
-  const key="time_"+player.src;
-  const saved=localStorage.getItem(key);
-  if(saved) player.currentTime=saved;
+
+player.addEventListener("playing",()=>{
+loader.style.display="none";
 });
+
+player.addEventListener("loadedmetadata",()=>{
+const key="time_"+player.src;
+const saved=localStorage.getItem(key);
+if(saved) player.currentTime=saved;
+});
+
 player.addEventListener("timeupdate",()=>{
-  const key="time_"+player.src;
-  localStorage.setItem(key,player.currentTime);
+const key="time_"+player.src;
+localStorage.setItem(key,player.currentTime);
 });
 
 function copyLink(){
-  navigator.clipboard.writeText(window.location.href);
-  alert("Link copied");
+navigator.clipboard.writeText(window.location.href);
+alert("Link copied");
 }
 
 function shareTelegram(){
-  const share="https://t.me/share/url?url="+encodeURIComponent(window.location.href);
-  window.open(share,"_blank");
+const share="https://t.me/share/url?url="+encodeURIComponent(window.location.href);
+window.open(share,"_blank");
 }
 
 function toggleFocus(){
-  document.body.classList.toggle("focus-mode");
+document.body.classList.toggle("focus-mode");
 }
 
 function addComment(){
-  const input=document.getElementById("commentInput");
-  if(!input.value) return;
-  let comments=JSON.parse(localStorage.getItem("comments")||"[]");
-  comments.unshift(input.value);
-  localStorage.setItem("comments",JSON.stringify(comments));
-  renderComments();
-  input.value="";
+const input=document.getElementById("commentInput");
+if(!input.value) return;
+let comments=JSON.parse(localStorage.getItem("comments")||"[]");
+comments.unshift(input.value);
+localStorage.setItem("comments",JSON.stringify(comments));
+renderComments();
+input.value="";
 }
+
 function renderComments(){
-  const list=document.getElementById("commentList");
-  let comments=JSON.parse(localStorage.getItem("comments")||"[]");
-  list.innerHTML="";
-  comments.forEach(c=>{
-    list.innerHTML+=`<div class="comment">${c}</div>`;
-  });
+const list=document.getElementById("commentList");
+let comments=JSON.parse(localStorage.getItem("comments")||"[]");
+list.innerHTML="";
+comments.forEach(c=>{
+list.innerHTML+=`<div class="comment">${c}</div>`;
+});
 }
 renderComments();
-</script>
-
-<script>
-
-  video.addEventListener("loadeddata", () => {
-    loader.style.opacity = "0";
-    setTimeout(() => {
-      loader.style.display = "none";
-    }, 300);
-  });
-
-  video.addEventListener("waiting", () => {
-    loader.style.display = "flex";
-    loader.style.opacity = "1";
-  });
-
-  video.addEventListener("playing", () => {
-    loader.style.opacity = "0";
-    setTimeout(() => {
-      loader.style.display = "none";
-    }, 300);
-  });
-});
 </script>
 
 </body>
