@@ -3,11 +3,42 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <script>
+const VIDEO_URL = new URL(location.href).searchParams.get("url");
+const CACHE_KEY = "stream_" + VIDEO_URL;
+const CACHE_TIME = 60 * 60 * 1000; // 1 hour
+
+const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
+const now = Date.now();
+
+if (cached && (now - cached.time < CACHE_TIME)) {
+  // Use cached link
+  window.videoPromise = Promise.resolve(cached.data);
+} else {
+  // Fetch new stream
+  window.videoPromise = fetch("https://github-backend00.onrender.com/api",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({url: VIDEO_URL})
+  })
+  .then(res => res.json())
+  .then(data => {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+      data: data,
+      time: Date.now()
+    }));
+    return data;
+  })
+  .catch(()=>null);
+}
+</script>
 
 <title>TeraBox Player – Watch Online</title>
   <link rel="preconnect" href="https://github-backend00.onrender.com">
 <link rel="dns-prefetch" href="https://github-backend00.onrender.com">
-  
+ 
+<link rel="preconnect" href="https://d.terabox.com">
+<link rel="dns-prefetch" href="https://d.terabox.com"> 
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
@@ -108,7 +139,7 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
       <!-- Video Player -->
       <video id="videoPlayer"
        controls
-       preload="metadata"
+       preload="auto"
        playsinline
        webkit-playsinline
        muted>
@@ -188,31 +219,18 @@ if(teraboxLink && titleBox){
   }
 }
 
-async function fetchStream(){
-  try{
-    const res=await fetch("https://github-backend00.onrender.com/api",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({url:teraboxLink})
-    });
-    if(!res.ok) throw new Error();
-    return await res.json();
-  }catch{
-    return null;
-  }
-}
-
 async function loadVideo(){
   if(!teraboxLink) return;
 
-  const data=await fetchStream();
+  const data = await window.videoPromise;
   if(!data || !data.list || !data.list[0]) return;
 
   const file=data.list[0];
 
   const stream =
-    file.fast_stream_url?.["720p"] ||
+    file.fast_stream_url?.["360p"] ||
     file.fast_stream_url?.["480p"] ||
+    file.fast_stream_url?.["720p"] ||
     file.stream_url;
 
   if(!stream) return;
@@ -224,17 +242,12 @@ async function loadVideo(){
 
   player.src = stream;
 
-// instant warm-up play
-player.muted = true;
-player.play().catch(()=>{});
-
-// Fast start warm-up
-player.muted = true;
-player.play().catch(()=>{});
+  // instant warm-up play
+  player.muted = true;
+  player.play().catch(()=>{});
 }
 
 loadVideo();
-
 player.addEventListener("loadedmetadata",()=>{
   const key="time_"+player.src;
   const saved=localStorage.getItem(key);
