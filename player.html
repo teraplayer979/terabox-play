@@ -16,10 +16,10 @@ if (cached && (now - cached.time < CACHE_TIME)) {
   window.videoPromise = Promise.resolve(cached.data);
 } else {
   window.videoPromise = fetch("https://github-backend00.onrender.com/api",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({url: VIDEO_URL.split("/").pop()})
-})
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({url: VIDEO_URL})
+  })
   .then(res => res.json())
   .then(data => {
     localStorage.setItem(CACHE_KEY, JSON.stringify({
@@ -135,7 +135,7 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 
 <div class="video-wrapper">
 
-<video id="videoPlayer" controls preload="metadata" playsinline></video>
+<video id="videoPlayer" controls preload="auto" playsinline muted></video>
 
 <div class="quality-menu">
 <button id="qualityBtn">360p ⚙️</button>
@@ -201,7 +201,8 @@ async function loadVideo(){
   if(!stream) return;
 
   player.src = stream;
-  player.load();
+  player.muted = true;
+  player.play().catch(()=>{});
 }
 
 loadVideo();
@@ -254,3 +255,4 @@ function toggleFocus(){
 
 </body>
 </html>
+ye mera working code tha please ab kisko vdo ko firse chala doo aur kuch bhi delete mtt krna production ready code ko copy pate ready in box please isse kuch delete mrt krna jitne featurws hai kuch bhi delete mrt kena
