@@ -233,20 +233,18 @@ player.load();
 player.muted = true;
 player.play().catch(()=>{});
 
-// Auto upgrade quality after a few seconds
-setTimeout(() => {
-  const betterStream =
-    streams["720p"] ||
-    streams["480p"];
+// Always start from fastest stream (360p)
+let stream =
+  streams["360p"] ||
+  streams["480p"] ||
+  streams["720p"] ||
+  file.stream_url ||
+  file.download_link;
 
-  if (betterStream && player.src !== betterStream) {
-    const time = player.currentTime;
-    player.src = betterStream;
-    player.currentTime = time;
-    player.play().catch(()=>{});
-    btn.textContent = betterStream.includes("720") ? "720p ⚙️" : "480p ⚙️";
-  }
-}, 4000);
+if(!stream) return;
+
+player.src = stream;
+player.load();
 
   if(!stream) return;
 
