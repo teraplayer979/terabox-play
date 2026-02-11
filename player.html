@@ -158,21 +158,19 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 <h2 id="videoTitle" class="video-title"></h2>
 
 <div class="video-wrapper">
-  <video id="videoPlayer" controls preload="auto" playsinline></video>
+  <video id="videoPlayer" controls preload="metadata" playsinline></video>
   
 <div id="playerLoader" class="player-loader">
   <div class="spinner"></div>
 </div>
 
 <div class="quality-menu">
-
-<div class="quality-menu">
-<button id="qualityBtn">360p ⚙️</button>
-<div id="qualityOptions" class="quality-options">
-<div data-q="360p">360p (Fast)</div>
-<div data-q="480p">480p</div>
-<div data-q="720p">720p HD</div>
-</div>
+  <button id="qualityBtn">360p ⚙️</button>
+  <div id="qualityOptions" class="quality-options">
+    <div data-q="360p">360p (Fast)</div>
+    <div data-q="480p">480p</div>
+    <div data-q="720p">720p HD</div>
+  </div>
 </div>
 </div>
 
@@ -228,7 +226,9 @@ async function loadVideo(){
   if(!stream) return;
 
   player.src = stream;
-  player.load();
+player.load();
+
+player.play().catch(()=>{});
 }
 
 loadVideo();
