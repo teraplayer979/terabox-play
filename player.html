@@ -15,7 +15,7 @@ const now = Date.now();
 if (cached && (now - cached.time < CACHE_TIME)) {
   window.videoPromise = Promise.resolve(cached.data);
 } else {
-  window.videoPromise = fetch("https://github-backend00.onrender.com/api",{
+  window.videoPromise = fetch("https://silent-shape-2a7b.anshkatiyar6387.workers.dev",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({url: VIDEO_URL})
