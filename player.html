@@ -16,10 +16,10 @@ if (cached && (now - cached.time < CACHE_TIME)) {
   window.videoPromise = Promise.resolve(cached.data);
 } else {
   window.videoPromise = fetch("https://silent-shape-2a7b.anshkatiyar6387.workers.dev",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({url: VIDEO_URL})
-  })
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({url: VIDEO_URL})
+})
   .then(res => res.json())
   .then(data => {
     localStorage.setItem(CACHE_KEY, JSON.stringify({
