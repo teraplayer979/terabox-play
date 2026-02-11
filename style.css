@@ -1,1 +1,93 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: white;
+}
 
+/* Container */
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Card */
+.card {
+  background: #0b1220;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Input */
+input[type="text"] {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* Buttons layout */
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Button base */
+.btn {
+  flex: 1;
+  min-width: 120px;
+  max-width: 200px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* Button colors */
+.btn-play {
+  background: linear-gradient(135deg, #5b7cff, #7c4dff);
+}
+
+.btn-download {
+  background: linear-gradient(135deg, #ff7a18, #ff3c3c);
+}
+
+.btn-telegram {
+  background: linear-gradient(135deg, #00b4db, #0083b0);
+}
+
+/* Hover */
+.btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* Mobile optimization */
+@media (max-width: 600px) {
+  .buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: none;
+    font-size: 16px;
+    padding: 13px;
+  }
+}
