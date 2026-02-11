@@ -160,7 +160,7 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 <h2 id="videoTitle" class="video-title"></h2>
 
 <div class="video-wrapper">
-  <video id="videoPlayer" controls preload="metadata" playsinline muted></video>
+  <video id="videoPlayer" controls preload="metadata" playsinline autoplay muted></video>
   
   <div id="playerLoader" class="player-loader">
     <div class="spinner"></div>
@@ -266,7 +266,17 @@ async function initPlayer() {
 
     // Apply Source and Load Immediately
     player.src = startStream;
-player.play().catch(()=>{}); // Force browser to start buffering
+
+player.play().then(() => {
+  // autoplay success → unmute
+  player.muted = false;
+}).catch(() => {
+  // autoplay blocked → first tap par unmute
+  player.addEventListener("click", () => {
+    player.muted = false;
+    player.play();
+  }, { once: true });
+}); // Force browser to start buffering
 
     // Attempt autoplay (Muted is already set in HTML for higher success rate)
     const playPromise = player.play();
