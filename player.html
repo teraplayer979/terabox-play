@@ -226,7 +226,8 @@ async function loadVideo(){
   if(!stream) return;
 
   player.src = stream;
-player.load();
+player.preload = "metadata";
+player.play().catch(()=>{});
 
 player.play().catch(()=>{});
 }
