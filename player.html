@@ -3,8 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TeraBox Player – Watch Online</title>
+
+<link rel="preconnect" href="https://github-backend00.onrender.com" crossorigin>
+<link rel="dns-prefetch" href="https://github-backend00.onrender.com">
+<link rel="preconnect" href="https://d.terabox.com" crossorigin>
+<link rel="dns-prefetch" href="https://d.terabox.com">
 
 <script>
+// OPTIMIZATION: Trigger API Fetch Immediately
 const VIDEO_URL = new URL(location.href).searchParams.get("url");
 const CACHE_KEY = "stream_" + VIDEO_URL;
 const CACHE_TIME = 6 * 60 * 60 * 1000; // 6 hours
@@ -15,10 +22,11 @@ const now = Date.now();
 if (cached && (now - cached.time < CACHE_TIME)) {
   window.videoPromise = Promise.resolve(cached.data);
 } else {
-  window.videoPromise = fetch("https://github-backend00.onrender.com/api",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({url: VIDEO_URL})
+  // Start fetch before DOM parses
+  window.videoPromise = fetch("https://github-backend00.onrender.com/api", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url: VIDEO_URL })
   })
   .then(res => res.json())
   .then(data => {
@@ -28,16 +36,9 @@ if (cached && (now - cached.time < CACHE_TIME)) {
     }));
     return data;
   })
-  .catch(()=>null);
+  .catch(() => null);
 }
 </script>
-
-<title>TeraBox Player – Watch Online</title>
-
-<link rel="preconnect" href="https://github-backend00.onrender.com">
-<link rel="dns-prefetch" href="https://github-backend00.onrender.com">
-<link rel="preconnect" href="https://d.terabox.com">
-<link rel="dns-prefetch" href="https://d.terabox.com">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
@@ -111,7 +112,8 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 .quality-options div:hover{
   background:rgba(255,255,255,0.1);
 }
-  .player-loader{
+
+.player-loader{
   position:absolute;
   inset:0;
   display:flex;
@@ -160,18 +162,18 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 <div class="video-wrapper">
   <video id="videoPlayer" controls preload="auto" playsinline muted></video>
   
-<div id="playerLoader" class="player-loader">
-  <div class="spinner"></div>
-</div>
-
-<div class="quality-menu">
-  <button id="qualityBtn">360p ⚙️</button>
-  <div id="qualityOptions" class="quality-options">
-    <div data-q="360p">360p (Fast)</div>
-    <div data-q="480p">480p</div>
-    <div data-q="720p">720p HD</div>
+  <div id="playerLoader" class="player-loader">
+    <div class="spinner"></div>
   </div>
-</div>
+
+  <div class="quality-menu">
+    <button id="qualityBtn">360p ⚙️</button>
+    <div id="qualityOptions" class="quality-options">
+      <div data-q="360p">360p (Fast)</div>
+      <div data-q="480p">480p</div>
+      <div data-q="720p">720p HD</div>
+    </div>
+  </div>
 </div>
 
 <div class="player-actions">
@@ -188,103 +190,20 @@ footer{text-align:center;padding:30px;color:#aaa;margin-top:60px;}
 </footer>
 
 <script>
-function getParam(name){
+// --- UI References ---
+const player = document.getElementById("videoPlayer");
+const titleBox = document.getElementById("videoTitle");
+const loader = document.getElementById("playerLoader");
+const qualityBtn = document.getElementById("qualityBtn");
+const qualityMenu = document.getElementById("qualityOptions");
+
+// --- State ---
+let availableStreams = {};
+
+// --- Utilities ---
+function getParam(name) {
   return new URL(window.location.href).searchParams.get(name);
 }
-
-const teraboxLink=getParam("url");
-const player=document.getElementById("videoPlayer");
-const titleBox=document.getElementById("videoTitle");
-
-let streams={};
-
-if(teraboxLink && titleBox){
-  try{
-    const name=decodeURIComponent(teraboxLink.split("/").pop());
-    titleBox.innerText=name.substring(0,60);
-  }catch{
-    titleBox.innerText="TeraBox Video";
-  }
-}
-
-async function loadVideo(){
-  if(!teraboxLink) return;
-
-  const data = await window.videoPromise;
-  if(!data || !data.list || !data.list[0]) return;
-
-  const file = data.list[0];
-  streams = file.fast_stream_url || {};
-
-  // Always start from fastest stream (360p)
-let stream =
-  streams["360p"] ||
-  streams["480p"] ||
-  streams["720p"] ||
-  file.stream_url ||
-  file.download_link;
-
-if(!stream) return;
-
-player.src = stream;
-player.load();
-
-  // silent autoplay for fast buffering
-player.muted = true;
-player.play().catch(()=>{});
-
-// Always start from fastest stream (360p)
-let stream =
-  streams["360p"] ||
-  streams["480p"] ||
-  streams["720p"] ||
-  file.stream_url ||
-  file.download_link;
-
-if(!stream) return;
-
-player.src = stream;
-player.load();
-
-  if(!stream) return;
-
-  player.src = stream;
-player.preload = "metadata";
-player.play().catch(()=>{});
-
-player.play().catch(()=>{});
-}
-
-loadVideo();
-
-const btn=document.getElementById("qualityBtn");
-const menu=document.getElementById("qualityOptions");
-
-btn.onclick=()=>{
-  menu.style.display = menu.style.display==="block"?"none":"block";
-};
-
-menu.querySelectorAll("div").forEach(opt=>{
-  opt.onclick=()=>{
-    const q=opt.dataset.q;
-    const time=player.currentTime;
-
-    const newStream=
-      streams[q] ||
-      streams["360p"] ||
-      streams["480p"] ||
-      streams["720p"];
-
-    if(newStream){
-      player.src=newStream;
-      player.currentTime=time;
-      player.play();
-      btn.textContent=q+" ⚙️";
-    }
-
-    menu.style.display="none";
-  };
-});
 
 function copyLink(){
   navigator.clipboard.writeText(window.location.href);
@@ -299,9 +218,103 @@ function shareTelegram(){
 function toggleFocus(){
   document.body.classList.toggle("focus-mode");
 }
-  const loader = document.getElementById("playerLoader");
 
-player.addEventListener("loadeddata", () => {
+// --- Player Logic ---
+const teraboxLink = getParam("url");
+
+// Set initial title if possible
+if (teraboxLink && titleBox) {
+  try {
+    const name = decodeURIComponent(teraboxLink.split("/").pop());
+    titleBox.innerText = name.substring(0, 60);
+  } catch {
+    titleBox.innerText = "TeraBox Video";
+  }
+}
+
+async function initPlayer() {
+  if (!teraboxLink) return;
+
+  try {
+    const data = await window.videoPromise;
+    if (!data || !data.list || !data.list[0]) throw new Error("Video not found");
+
+    const file = data.list[0];
+    
+    // Update Title from API
+    if (file.filename) titleBox.innerText = file.filename.substring(0, 60);
+
+    // Parse streams
+    const fastStreams = file.fast_stream_url || {};
+    
+    // Store for quality switching
+    availableStreams = {
+      "360p": fastStreams["360p"],
+      "480p": fastStreams["480p"],
+      "720p": fastStreams["720p"],
+      "default": file.stream_url || file.download_link
+    };
+
+    // OPTIMIZATION: Strict Priority -> 360p is KING for speed
+    const startStream = 
+      availableStreams["360p"] || 
+      availableStreams["480p"] || 
+      availableStreams["720p"] || 
+      availableStreams["default"];
+
+    if (!startStream) throw new Error("No stream available");
+
+    // Apply Source and Load Immediately
+    player.src = startStream;
+    player.load(); // Force browser to start buffering
+
+    // Attempt autoplay (Muted is already set in HTML for higher success rate)
+    const playPromise = player.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay blocked - unmuting on click handled by listener below
+        console.log("Autoplay blocked waiting for user");
+      });
+    }
+
+  } catch (err) {
+    console.error("Player Error:", err);
+    // Hide loader if error so user sees controls (or lack thereof)
+    loader.style.display = "none";
+  }
+}
+
+// --- Quality Switcher ---
+qualityBtn.onclick = () => {
+  qualityMenu.style.display = (qualityMenu.style.display === "block") ? "none" : "block";
+};
+
+qualityMenu.querySelectorAll("div").forEach(opt => {
+  opt.onclick = () => {
+    const q = opt.dataset.q;
+    const time = player.currentTime;
+    const isPlaying = !player.paused;
+
+    // Fallback logic for switcher
+    const newStream = 
+      availableStreams[q] || 
+      availableStreams["360p"] || 
+      availableStreams["480p"] || 
+      availableStreams["default"];
+
+    if (newStream && player.src !== newStream) {
+      player.src = newStream;
+      player.currentTime = time;
+      if (isPlaying) player.play();
+      qualityBtn.textContent = q + " ⚙️";
+    }
+    
+    qualityMenu.style.display = "none";
+  };
+});
+
+// --- Event Listeners ---
+player.addEventListener("canplay", () => {
   loader.style.display = "none";
 });
 
@@ -312,12 +325,17 @@ player.addEventListener("waiting", () => {
 player.addEventListener("playing", () => {
   loader.style.display = "none";
 });
-  player.addEventListener("play", () => {
-  player.muted = false;
+
+// Unmute on first manual interaction if autoplay was muted
+player.addEventListener("play", () => {
+  if(player.muted) player.muted = false;
 });
+
+// Initialize
+initPlayer();
 </script>
 
-<script src="https://pl28686494.effectivegatecpm.com/2b/ad/f6/2badf611f381efeb9eb9dc119e4532b2.js"></script>
+<script async src="https://pl28686494.effectivegatecpm.com/2b/ad/f6/2badf611f381efeb9eb9dc119e4532b2.js"></script>
 
 </body>
-</html
+</html>
