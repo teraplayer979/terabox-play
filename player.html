@@ -7,7 +7,7 @@
 <script>
 const VIDEO_URL = new URL(location.href).searchParams.get("url");
 const CACHE_KEY = "stream_" + VIDEO_URL;
-const CACHE_TIME = 60 * 60 * 1000;
+const CACHE_TIME = 6 * 60 * 60 * 1000; // 6 hours
 
 const cached = JSON.parse(localStorage.getItem(CACHE_KEY));
 const now = Date.now();
@@ -216,12 +216,33 @@ async function loadVideo(){
   const file = data.list[0];
   streams = file.fast_stream_url || {};
 
-  const stream =
-    file.stream_url ||
-    file.download_link ||
+  // Always start from fastest stream (360p)
+let stream =
+  streams["360p"] ||
+  streams["480p"] ||
+  streams["720p"] ||
+  file.stream_url ||
+  file.download_link;
+
+if(!stream) return;
+
+player.src = stream;
+player.load();
+
+// Auto upgrade quality after a few seconds
+setTimeout(() => {
+  const betterStream =
     streams["720p"] ||
-    streams["480p"] ||
-    streams["360p"];
+    streams["480p"];
+
+  if (betterStream && player.src !== betterStream) {
+    const time = player.currentTime;
+    player.src = betterStream;
+    player.currentTime = time;
+    player.play().catch(()=>{});
+    btn.textContent = betterStream.includes("720") ? "720p ⚙️" : "480p ⚙️";
+  }
+}, 4000);
 
   if(!stream) return;
 
