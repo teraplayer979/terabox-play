@@ -266,7 +266,7 @@ async function initPlayer() {
 
     // Apply Source and Load Immediately
     player.src = startStream;
-    player.load(); // Force browser to start buffering
+player.play().catch(()=>{}); // Force browser to start buffering
 
     // Attempt autoplay (Muted is already set in HTML for higher success rate)
     const playPromise = player.play();
