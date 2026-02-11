@@ -188,11 +188,11 @@ async function loadVideo(){
   streams = file.fast_stream_url || {};
 
   const stream =
-    streams["360p"] ||
-    streams["480p"] ||
-    streams["720p"] ||
     file.stream_url ||
-    file.download_link;
+    file.download_link ||
+    streams["720p"] ||
+    streams["480p"] ||
+    streams["360p"];
 
   if(!stream) return;
 
