@@ -18,7 +18,7 @@ if (cached && (now - cached.time < CACHE_TIME)) {
   window.videoPromise = fetch("https://dawn-violet-f826.anshkatiyar6387.workers.dev",{
   method:"POST",
   headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({url: VIDEO_URL})
+  body:JSON.stringify({url: VIDEO_URL.split("/").pop()})
 })
   .then(res => res.json())
   .then(data => {
